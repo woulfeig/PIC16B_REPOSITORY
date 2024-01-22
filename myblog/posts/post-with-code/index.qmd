@@ -1,0 +1,9 @@
+---
+title: "Post With Code"
+author: "Isabella Woulfe"
+date: "2024-01-20"
+categories: [news, code, analysis]
+image: "image.jpg"
+---
+
+This is a post with executable code.

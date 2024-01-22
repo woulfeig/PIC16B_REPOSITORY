@@ -1,0 +1,21 @@
+[
+  {
+    "listing": "/myblog/index.html",
+    "items": [
+      "/myblog/posts/HW0-Data Visualization/index.html",
+      "/myblog/posts/post-with-code/index.html",
+      "/myblog/posts/welcome/index.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/Data Visualization/datavisualization(HW0).html",
+      "/myblog/posts/HW0-Data Visualization/index.html",
+      "/myblog/posts/post-with-code/index.html",
+      "/myblog/posts/welcome/index.html",
+      "/posts/post-with-code/index.html",
+      "/posts/welcome/index.html"
+    ]
+  }
+]

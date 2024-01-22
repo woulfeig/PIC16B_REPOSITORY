@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "posts/Data Visualization/datavisualization(HW0).html",
+    "href": "posts/Data Visualization/datavisualization(HW0).html",
+    "title": "myblog",
+    "section": "",
+    "text": "Data Visualtzation!\nUsing The Palmer Penguins data set.\nThere are many different ways to model and display a set of data. Using the Plotly library, we have the ability to make histographes, boxplots, and more. For simplicity sake, today we will be working on developing scatterplots. Before we start making our graph, we must download and organize our data. The easiest way to complete this step is by using panda operations as seen below.\n\nimport pandas as pd\nfilename = \"palmer_penguins.csv\"\npenguins = pd.read_csv(filename)\npenguins = penguins.dropna(subset = [\"Body Mass (g)\", \"Sex\"])\npenguins[\"Species\"] = penguins[\"Species\"].str.split().str.get(0)\npenguins = penguins[penguins[\"Sex\"] != \".\"]\n\ncols = [\"Species\", \"Island\", \"Sex\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\", \"Flipper Length (mm)\", \"Body Mass (g)\"]\npenguins = penguins[cols]\n\nAfter we have downloaded our data set, we must import Plotly in order to make our visualizations.\n\nimport plotly\n\nNext, we will create a visualization labeled “fig” and use our Plotly commands to organize our data. For this plot, we will see how the length and depth of the culmen vary for different species of penguins. Using the following commands, we can create a customizable plot.\n\nfrom plotly import express as px\n\nfig = px.scatter(data_frame = penguins,\n                 x = \"Culmen Length (mm)\",\n                 y = \"Culmen Depth (mm)\",\n                 color = \"Species\",\n                 width = 500,\n                 height = 300,\n                )\n\n\nfig.update_layout(margin={\"r\":0, \"t\":0, \"l\":0, \"b\":0})\n\nfig.show()\n#maybe change this code block to one of the later ones \n\nUnable to display output for mime type(s): application/vnd.plotly.v1+json"
+  },
+  {
+    "objectID": "myblog/posts/post-with-code/index.html",
+    "href": "myblog/posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code."
+  },
+  {
+    "objectID": "myblog/index.html",
+    "href": "myblog/index.html",
+    "title": "myblog",
+    "section": "",
+    "text": "Data Visualization\n\n\n\n\n\n\nHomework\n\n\ncode\n\n\nWeek 0\n\n\n\n\n\n\n\n\n\nJan 22, 2024\n\n\nIsabella Woulfe\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 20, 2024\n\n\nIsabella Woulfe\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 17, 2024\n\n\nIsabella Woulfe\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "myblog",
+    "section": "",
+    "text": "Data Visualization\n\n\n\n\n\n\nHomework\n\n\ncode\n\n\nWeek 0\n\n\n\n\n\n\n\n\n\nJan 22, 2024\n\n\nIsabella Woulfe\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 20, 2024\n\n\nIsabella Woulfe\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 17, 2024\n\n\nIsabella Woulfe\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 17, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 14, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "myblog/about.html",
+    "href": "myblog/about.html",
+    "title": "Isabella Woulfe",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "myblog/posts/HW0-Data Visualization/index.html",
+    "href": "myblog/posts/HW0-Data Visualization/index.html",
+    "title": "Data Visualization",
+    "section": "",
+    "text": "Data Visualtzation!\nUsing The Palmer Penguins data set.\nThere are many different ways to model and display a set of data. Using the Plotly library, we have the ability to make histographes, boxplots, and more. For simplicity sake, today we will be working on developing scatterplots. Before we start making our graph, we must download and organize our data. The easiest way to complete this step is by using panda operations as seen below.\n\nimport pandas as pd\nfilename = \"palmer_penguins.csv\"\npenguins = pd.read_csv(filename)\npenguins = penguins.dropna(subset = [\"Body Mass (g)\", \"Sex\"])\npenguins[\"Species\"] = penguins[\"Species\"].str.split().str.get(0)\npenguins = penguins[penguins[\"Sex\"] != \".\"]\n\ncols = [\"Species\", \"Island\", \"Sex\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\", \"Flipper Length (mm)\", \"Body Mass (g)\"]\npenguins = penguins[cols]\n\nAfter we have downloaded our data set, we must import Plotly in order to make our visualizations.\n\nimport plotly\n\nNext, we will create a visualization labeled “fig” and use our Plotly commands to organize our data. For this plot, we will see how the length and depth of the culmen vary for different species of penguins. Using the following commands, we can create a customizable plot.\n\nfrom plotly import express as px\n\nfig = px.scatter(data_frame = penguins,\n                 x = \"Culmen Length (mm)\",\n                 y = \"Culmen Depth (mm)\",\n                 color = \"Species\",\n                 width = 500,\n                 height = 300,\n                )\n\n\nfig.update_layout(margin={\"r\":0, \"t\":0, \"l\":0, \"b\":0})\n\nfig.show()\n#maybe change this code block to one of the later ones \n\nUnable to display output for mime type(s): application/vnd.plotly.v1+json"
+  },
+  {
+    "objectID": "myblog/posts/welcome/index.html",
+    "href": "myblog/posts/welcome/index.html",
+    "title": "Welcome To My Blog",
+    "section": "",
+    "text": "This is the first post in a Quarto blog. Welcome! Here I will be documenting my journey through PIC 16B.\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+  },
+  {
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
+    "section": "",
+    "text": "This is a post with executable code."
+  }
+]

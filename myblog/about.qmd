@@ -1,0 +1,19 @@
+---
+title: "Isabella Woulfe"
+image: https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedia.licdn.com%2Fdms%2Fimage%2FD4D03AQEOVl4y_02mcg%2Fprofile-displayphoto-shrink_800_800%2F0%2F1697236412417%3Fe%3D2147483647%26v%3Dbeta%26t%3DI3XNVryytoIh0b9NEIEgdaVBdFKBEil0yd9WrSTZaCY&tbnid=UJs4VyBNwBqJmM&vet=12ahUKEwiy34-k_e-DAxVRPkQIHTk2A-UQMygBegQIARA1..i&imgrefurl=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fisabella-woulfe-182b86295&docid=R_vinbyRn0eHsM&w=800&h=800&q=isabella%20woulfe&ved=2ahUKEwiy34-k_e-DAxVRPkQIHTk2A-UQMygBegQIARA1
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/isabella-woulfe-182b86295/
+    - icon: github
+      text: Github
+      href: https://github.com/woulfeig
+
+---
+
+About this blog
