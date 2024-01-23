@@ -193,9 +193,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>DATA VISUALIZATION!</p>
-<p>Using The Palmer Penguins data set.</p>
+<section id="data-visualization" class="level1">
+<h1>Data Visualization!</h1>
+<section id="using-the-palmer-penguins-data-set" class="level2">
+<h2 class="anchored" data-anchor-id="using-the-palmer-penguins-data-set">Using The Palmer Penguins data set</h2>
 <p>There are many different ways to model and display a set of data. Using the Plotly library, we have the ability to make histographes, boxplots, and more. Plotly makes graphing and modelling data sets very simple and straighforward. In general, you start with calling the type of figure you would like to create and then manually selecting which customization you need for the specific plot.</p>
+</section>
+<section id="scatterplots" class="level2">
+<h2 class="anchored" data-anchor-id="scatterplots">Scatterplots</h2>
 <p>For simplicity sake, today we will start with developing scatterplots. Before we start making our graph, we must download and organize our data. The easiest way to complete this step is by using panda operations as seen below. Today, we will be using the Palmer Penguin data set that analyzes the differences between three different species of penguins. In order to use this data sheet, we must ensure that we have the file downloaded to the same folder as our Jupyter Notebook. Please run the code cell below to upload the needed data.</p>
 <div id="cell-3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -238,6 +243,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>In all, scatterplots through Plotly are extremely customizable and only require basic calls. Plotly can be used for many different data sets and model many different ideas in a variety of forms.</p>
+</section>
+<section id="scatterplots-with-facets" class="level2">
+<h2 class="anchored" data-anchor-id="scatterplots-with-facets">Scatterplots with Facets</h2>
 <p>Plotly also has the ability to create more detailed scatterplots. For example, we can create facets within our scatterplots. Facets are smaller scatterplots that can add additional details to our visualizations. Similar to our above scatterplot, we will be comparing culmen measurements amoungest different species of penguins. However, we will further our understanding by creating facets that show the recorded culmen data in specific plots for female and male penguins.</p>
 <p>We set up our plot in a relatively similar way to the demonstration above. The extra customizations will allow our graph to appear in two smaller sets.</p>
 <div id="cell-9" class="cell" data-execution_count="7">
@@ -261,6 +269,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <iframe scrolling="no" width="520px" height="320" src="iframe_figures/figure_7.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
+</section>
+<section id="d-scatterplots" class="level2">
+<h2 class="anchored" data-anchor-id="d-scatterplots">3D Scatterplots</h2>
 <p>We have now explored two different ways to work with scatterplots. However, these two plots are both in 2D and only compare two pieces of recorded data in their visualizations. Through Plotly, we can explore plots that compare three different types of measurements. This means we are making 3D scatterplot graphes! For our example, we will keep analyzing both culmen depth and culmen length but now will also incorporate body mass measurements. Luckily for us, the format of our customizations is very similar. Instead, we use a slightly different call that designates that this is a 3-dimensional plot. Run the code block below to see the 3D scatterplot.</p>
 <div id="cell-11" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter_3d(penguins,</span>
@@ -279,6 +290,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Thank you for reading! Good luck making your visualizations with Plotly!</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
