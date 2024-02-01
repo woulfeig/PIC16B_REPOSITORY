@@ -220,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Next, we will create a visualization labeled “fig” and use our Plotly commands to organize our data. For this plot, we will see how the length and depth of the culmen vary for different species of penguins. The culmen describes the upper ridge of a penguin’s bill. Researches describe the culmen using depth and length.</p>
 <p>We use the second and third lines of code to make the final plot visible to a blog user. If you are just planning on creating figures in your notebook, please only use the first line to import the necessary tools to create and customize the plot. We call our scatterplot in the fifth line of code. In the event that you are making a different type of plot, you would set “fig” equal to a different keyword. Within our “()” we will label our x and y axis, change dot color based on the species of penguin, and designate the size of the graph.</p>
 <p>In the second to last line of code, we add extra customizations to the layout of the plot itself. By using these commands, we can decrease the amount of whitespace of our graph. Finally, we can see our final scatterplot using the last line of code.</p>
-<div id="cell-7" class="cell" data-execution_count="25">
+<div id="cell-7" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pio.renderers.default<span class="op">=</span><span class="st">'iframe'</span></span>
@@ -229,7 +229,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                 x <span class="op">=</span> <span class="st">"Culmen Length (mm)"</span>,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> <span class="st">"Culmen Depth (mm)"</span>,</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                 width <span class="op">=</span> <span class="dv">300</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                 width <span class="op">=</span> <span class="dv">600</span>,</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                 height <span class="op">=</span> <span class="dv">400</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                )</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
@@ -240,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="320px" height="420" src="iframe_figures/figure_25.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="620px" height="420" src="iframe_figures/figure_28.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 <p>In all, scatterplots through Plotly are extremely customizable and only require basic calls. Plotly can be used for many different data sets and model many different ideas in a variety of forms.</p>
