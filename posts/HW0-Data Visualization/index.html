@@ -202,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="scatterplots" class="level2">
 <h2 class="anchored" data-anchor-id="scatterplots">Scatterplots</h2>
 <p>For simplicity sake, today we will start with developing scatterplots. Before we start making our graph, we must download and organize our data. The easiest way to complete this step is by using panda operations as seen below. Today, we will be using the Palmer Penguin data set that analyzes the differences between three different species of penguins. In order to use this data sheet, we must ensure that we have the file downloaded to the same folder as our Jupyter Notebook. Please run the code cell below to upload the needed data.</p>
-<div id="cell-3" class="cell" data-execution_count="1">
+<div id="cell-3" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#importing packages and our data set </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -222,25 +222,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Next, we will create a visualization labeled “fig” and use our Plotly commands to organize our data. For this plot, we will see how the length and depth of the culmen vary for different species of penguins. The culmen describes the upper ridge of a penguin’s bill. Researches describe the culmen using depth and length.</p>
 <p>We use the second and third lines of code to make the final plot visible to a blog user. If you are just planning on creating figures in your notebook, please only use the first line to import the necessary tools to create and customize the plot. We call our scatterplot in the fifth line of code. In the event that you are making a different type of plot, you would set “fig” equal to a different keyword. Within our “()” we will label our x and y axis, change dot color based on the species of penguin, and designate the size of the graph.</p>
 <p>In the second to last line of code, we add extra customizations to the layout of the plot itself. By using these commands, we can decrease the amount of whitespace of our graph. Finally, we can see our final scatterplot using the last line of code.</p>
-<div id="cell-7" class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pio.renderers.default<span class="op">=</span><span class="st">'iframe'</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(data_frame <span class="op">=</span> penguins,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                 x <span class="op">=</span> <span class="st">"Culmen Length (mm)"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> <span class="st">"Culmen Depth (mm)"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                 width <span class="op">=</span> <span class="dv">600</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                 height <span class="op">=</span> <span class="dv">400</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title_text <span class="op">=</span> <span class="st">"Culmen Length vs. Culmen Depth in Different Penguin Species"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-7" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#importing our packages to print and create our plots </span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#our first plot will be a scatterplot</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>pio.renderers.default<span class="op">=</span><span class="st">'iframe'</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(data_frame <span class="op">=</span> penguins,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                 x <span class="op">=</span> <span class="st">"Culmen Length (mm)"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> <span class="st">"Culmen Depth (mm)"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> <span class="st">"Species"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                 width <span class="op">=</span> <span class="dv">600</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                 height <span class="op">=</span> <span class="dv">400</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title_text <span class="op">=</span> <span class="st">"Culmen Length vs. Culmen Depth in Different Penguin Species"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>fig.show()</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="620px" height="420" src="iframe_figures/figure_30.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="620px" height="420" src="iframe_figures/figure_39.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 <p>In all, scatterplots through Plotly are extremely customizable and only require basic calls. Plotly can be used for many different data sets and model many different ideas in a variety of forms.</p>
@@ -249,44 +252,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="scatterplots-with-facets">Scatterplots with Facets</h2>
 <p>Plotly also has the ability to create more detailed scatterplots. For example, we can create facets within our scatterplots. Facets are smaller scatterplots that can add additional details to our visualizations. Similar to our above scatterplot, we will be comparing culmen measurements amoungest different species of penguins. However, we will further our understanding by creating facets that show the recorded culmen data in specific plots for female and male penguins.</p>
 <p>We set up our plot in a relatively similar way to the demonstration above. The extra customizations will allow our graph to appear in two smaller sets.</p>
-<div id="cell-9" class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(data_frame <span class="op">=</span> penguins,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 x <span class="op">=</span> <span class="st">"Culmen Length (mm)"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> <span class="st">"Culmen Depth (mm)"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                 hover_name <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                 hover_data <span class="op">=</span> [<span class="st">"Island"</span>, <span class="st">"Sex"</span>],</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                 size <span class="op">=</span> <span class="st">"Body Mass (g)"</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                 size_max <span class="op">=</span> <span class="dv">8</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                 width <span class="op">=</span> <span class="dv">850</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                 height <span class="op">=</span> <span class="dv">400</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                opacity <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                facet_col<span class="op">=</span> <span class="st">"Sex"</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">"Culmen Length vs. Depth for Different Species in Both Male and Female Penguins"</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-9" class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#for our second plot, we will make a scatterplot with facets</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(data_frame <span class="op">=</span> penguins,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 x <span class="op">=</span> <span class="st">"Culmen Length (mm)"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                 y <span class="op">=</span> <span class="st">"Culmen Depth (mm)"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                 color <span class="op">=</span> <span class="st">"Species"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                 hover_name <span class="op">=</span> <span class="st">"Species"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                 hover_data <span class="op">=</span> [<span class="st">"Island"</span>, <span class="st">"Sex"</span>],</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                 size <span class="op">=</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                 size_max <span class="op">=</span> <span class="dv">8</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                 width <span class="op">=</span> <span class="dv">850</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                 height <span class="op">=</span> <span class="dv">400</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                opacity <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                facet_col<span class="op">=</span> <span class="st">"Sex"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                title <span class="op">=</span> <span class="st">"Culmen Length vs. Depth for Different Species in Both Male and Female Penguins"</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="870px" height="420" src="iframe_figures/figure_38.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="870px" height="420" src="iframe_figures/figure_41.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 </section>
 <section id="d-scatterplots" class="level2">
 <h2 class="anchored" data-anchor-id="d-scatterplots">3D Scatterplots</h2>
 <p>We have now explored two different ways to work with scatterplots. However, these two plots are both in 2D and only compare two pieces of recorded data in their visualizations. Through Plotly, we can explore plots that compare three different types of measurements. This means we are making 3D scatterplot graphes! For our example, we will keep analyzing both culmen depth and culmen length but now will also incorporate body mass measurements. Luckily for us, the format of our customizations is very similar. Instead, we use a slightly different call that designates that this is a 3-dimensional plot. Run the code block below to see the 3D scatterplot.</p>
-<div id="cell-11" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter_3d(penguins,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                    x <span class="op">=</span> <span class="st">"Body Mass (g)"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    y <span class="op">=</span> <span class="st">"Culmen Length (mm)"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                    z <span class="op">=</span> <span class="st">"Culmen Depth (mm)"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                    color <span class="op">=</span> <span class="st">"Species"</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                    opacity <span class="op">=</span> <span class="fl">0.5</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title <span class="op">=</span> <span class="st">"Culmen Length vs. Culmen Depth vs. Body Mass for Different Species of Penguins"</span>)</span>
+<div id="cell-11" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#finally, we will make our most advanced plot: a 3D scatter plot</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter_3d(penguins,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                    x <span class="op">=</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                    y <span class="op">=</span> <span class="st">"Culmen Length (mm)"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                    z <span class="op">=</span> <span class="st">"Culmen Depth (mm)"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                    color <span class="op">=</span> <span class="st">"Species"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                    opacity <span class="op">=</span> <span class="fl">0.5</span>)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title <span class="op">=</span> <span class="st">"Culmen Length vs. Culmen Depth vs. Body Mass for Different Species of Penguins"</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_36.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_42.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 <p>Thank you for reading! Good luck making your visualizations with Plotly!</p>
