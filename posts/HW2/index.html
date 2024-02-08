@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Let’s start of today’s blog post by asking the following question: what movie or TV shows share actors with your favorite movie or show?</p>
 <p>Have you ever finished a great movie just to immediately look up every behind the scenes detail on the internet? I know that I definitely have. Often times, I find that if I enjoy one movie I am more likely to enjoy a second movie created by the same director or starring the same actor. Rather than going down a tedious “Google rabbit hole”, we can create a program that takes a movie and shows us which projects we can see the same actors in.</p>
 <p>We will complete this project using the Python package called scrapy. This package allows us to extract data from a specific website and use it in our own way. We must start our project by importing all the necessary Python packages.</p>
-<div id="cell-2" class="cell" data-execution_count="19">
+<div id="cell-2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrapy</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> py</span>
@@ -229,10 +229,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> scrapy.Request(response.urljoin(actor_url), callback<span class="op">=</span><span class="va">self</span>.parse_actor_page)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, we will create one more function called ‘def parse_actor_page’. This function will actually pull the movie and TV show names from the list of credits for each actor. It is important that we select the correct part of the website to use in the ‘response.css’. After implementing the code from the cell below, we will be able to create our CSV file.</p>
-<div id="cell-9" class="cell" data-execution_count="22">
+<div id="cell-9" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_actor_page(<span class="va">self</span>, response):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        actor_name <span class="op">=</span> response.css(<span class="st">'a::text'</span>).extract()[<span class="dv">35</span>]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        movie_or_TV_names <span class="op">=</span> response.css(<span class="st">'bdi::text'</span>).extract()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        movie_or_TV_names <span class="op">=</span> response.css(<span class="st">'div.credits_list'</span>).css(<span class="st">'bdi::text'</span>).extract()</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> movie_or_TV_name <span class="kw">in</span> movie_or_TV_names:</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> {<span class="st">"actor"</span>: actor_name, <span class="st">"movie_or_TV_name"</span>: movie_or_TV_name}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -241,95 +241,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-our-database" class="level2">
 <h2 class="anchored" data-anchor-id="creating-our-database">Creating our Database</h2>
 <p>Now that we have gathered our data using our webscraper, we will now organzie it into a database. We will start by simporting our csv file that we filled using our scraper. Please ensure that this CSV file is saved in the same location as your Jupyter notebook.</p>
-<div id="cell-12" class="cell" data-execution_count="23">
+<div id="cell-12" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating our initial database using out CSV file</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"results.csv"</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(filename)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="23">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">actor</th>
-<th data-quarto-table-cell-role="th">movie_or_TV_name</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>Anya Taylor-Joy</td>
-<td>Split</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>Anya Taylor-Joy</td>
-<td>The Witch</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>Anya Taylor-Joy</td>
-<td>The Menu</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>Anya Taylor-Joy</td>
-<td>The Queen's Gambit</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>Anya Taylor-Joy</td>
-<td>The Super Mario Bros. Movie</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">1146</td>
-<td>Mia Goth</td>
-<td>Nymphomaniac: Vol. II</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1147</td>
-<td>Mia Goth</td>
-<td>MaXXXine</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">1148</td>
-<td>Mia Goth</td>
-<td>Pearl</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1149</td>
-<td>Mia Goth</td>
-<td>Disappear Into the Blue</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">1150</td>
-<td>Mia Goth</td>
-<td>Pearl</td>
-</tr>
-</tbody>
-</table>
-
-<p>1151 rows × 2 columns</p>
-</div>
+<div class="cell-output cell-output-error">
+<pre><code>FileNotFoundError: [Errno 2] No such file or directory: 'results.csv'</code></pre>
 </div>
 </div>
 <p>After printing our dataframe, we can see that it looks extremely similar to the table in our csv file. This is great! However, in order to find movies that share the same actors, we must know which of the films in our “movie_or_TV_name” column have multiple actors from “Emma.”. We can do this by creating a sorted list and adding a new column to our dataframe. We can implement this using the code below.</p>
 <div id="cell-14" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#identifies the movies that have more that stars more than one of our 50 actors in "Emma.":</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>actor_counts_per_movie <span class="op">=</span> df.groupby(<span class="st">'movie_or_TV_name'</span>)[<span class="st">'actor'</span>].nunique()</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sorted_actor_counts <span class="op">=</span> actor_counts_per_movie.sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#here we will make our above list a column within our dataframe: </span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'actor_counts_per_movie'</span>] <span class="op">=</span> df[<span class="st">'movie_or_TV_name'</span>].<span class="bu">map</span>(actor_counts_per_movie)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#identifies the movies that have more that stars more than one of our 50 actors in "Emma.":</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>actor_counts_per_movie <span class="op">=</span> df.groupby(<span class="st">'movie_or_TV_name'</span>)[<span class="st">'actor'</span>].nunique()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sorted_actor_counts <span class="op">=</span> actor_counts_per_movie.sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#here we will make our above list a column within our dataframe: </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'actor_counts_per_movie'</span>] <span class="op">=</span> df[<span class="st">'movie_or_TV_name'</span>].<span class="bu">map</span>(actor_counts_per_movie)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <div>
 
@@ -419,17 +348,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now we can better use our data to make recommendations. After creating our second column, let’s test if everything worked. After doing some exploring the Movie Database, I noticed that three members of the “Emma.” cast also had roles in the hit show “Peaky Blinders”. However, our database has thousands of rows of movies. We will use the following cell of code to ensure that our database was created correctly.</p>
 <div id="cell-16" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#we will pick a random movie that we know multiple actors have starred in </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#for this demo, we will use "Peaky Blinders"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>specific_movie <span class="op">=</span> <span class="st">"Peaky Blinders"</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#we will run the line to determine the number of actors using a specific movie title</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>actor_count <span class="op">=</span> sorted_actor_counts.get(specific_movie)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#we will now use loops to determine the number of actors who are in "Emma." and "Peaky Blinders"</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> actor_count <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"The number of actors in '</span><span class="sc">{</span>specific_movie<span class="sc">}</span><span class="ss">' is </span><span class="sc">{</span>actor_count<span class="sc">}</span><span class="ss">."</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Error!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#we will pick a random movie that we know multiple actors have starred in </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#for this demo, we will use "Peaky Blinders"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>specific_movie <span class="op">=</span> <span class="st">"Peaky Blinders"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#we will run the line to determine the number of actors using a specific movie title</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>actor_count <span class="op">=</span> sorted_actor_counts.get(specific_movie)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#we will now use loops to determine the number of actors who are in "Emma." and "Peaky Blinders"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> actor_count <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"The number of actors in '</span><span class="sc">{</span>specific_movie<span class="sc">}</span><span class="ss">' is </span><span class="sc">{</span>actor_count<span class="sc">}</span><span class="ss">."</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Error!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The number of actors in 'Peaky Blinders' is 3.</code></pre>
 </div>
@@ -437,12 +366,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Our test worked! Therefore, we can confirm that we have successfully created a dataframe that contains actor names, movies and shows for each actor, and the number of actors from our list that are in each project.</p>
 <p>We need to make a few more adjustments to our dataset before we can create a readable graph. The first step is to our sort our dataframe. In order to make my dataset and my graph easier to read, I am going to put the rows in descending order by starting with the movies that share the most actors and ending with the ones that share the least.</p>
 <div id="cell-19" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating our sorted dataframe:</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'actor_counts_per_movie'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#as every actor in this film is in "Emma.", this movie should be in the first few rows</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#display our updated dataframe:</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>sorted_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating our sorted dataframe:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'actor_counts_per_movie'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#as every actor in this film is in "Emma.", this movie should be in the first few rows</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#display our updated dataframe:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>sorted_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <div>
 
@@ -532,9 +461,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>As we are assuming that the best recommendation has the greatest number of actors from “Emma.”, the last couple rows (the movies with only one actor from our movie) are not great recommendations for our users. Thus, we can make our plot simpler and easier to read by only plotting the the best recommendations. In the next cell, I will create a new dataframe that only includes the top 300 rows of sorted data frame.</p>
 <div id="cell-21" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#selecting our top choices with the most shared actors</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>top_movies <span class="op">=</span> sorted_df.head(<span class="dv">150</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>top_movies</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#selecting our top choices with the most shared actors</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>top_movies <span class="op">=</span> sorted_df.head(<span class="dv">150</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>top_movies</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 
@@ -624,20 +553,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Finally, we can create our visualization and determine the best recommendations. The best way to model the answer to our question is through creating a bar graph. We will plot the movie names and the number of actors from “Emma.” in each film. The tall the bar, the better fit the film will be for fans of “Emma.”. As every actor discussed has played a role in “Emma.”, we will expect this film to have the tallest bar that accounts for the entire cast of 50 people. Use Plotly in the cell below to create a graph.</p>
 <div id="cell-23" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating our bar graph with the given conditions</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(top_movies, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>             x<span class="op">=</span><span class="st">'movie_or_TV_name'</span>, </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>             y<span class="op">=</span><span class="st">'actor_counts_per_movie'</span>, </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">'Movies with the "Emma" Actors'</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#make customizations to make our plot more readable</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>fig.update_xaxes(title<span class="op">=</span><span class="st">'Movie/TV Show'</span>)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>fig.update_yaxes(title<span class="op">=</span><span class="st">'Number of Shared Actors'</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>fig.update_layout(yaxis<span class="op">=</span><span class="bu">dict</span>(<span class="bu">range</span><span class="op">=</span>[<span class="dv">0</span>, <span class="dv">50</span>]))</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title <span class="op">=</span> <span class="st">'Movie Recommendations for "Emma." Fans'</span>)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#output our figure</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating our bar graph with the given conditions</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(top_movies, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>             x<span class="op">=</span><span class="st">'movie_or_TV_name'</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>             y<span class="op">=</span><span class="st">'actor_counts_per_movie'</span>, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>             title<span class="op">=</span><span class="st">'Movies with the "Emma" Actors'</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#make customizations to make our plot more readable</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>fig.update_xaxes(title<span class="op">=</span><span class="st">'Movie/TV Show'</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>fig.update_yaxes(title<span class="op">=</span><span class="st">'Number of Shared Actors'</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>fig.update_layout(yaxis<span class="op">=</span><span class="bu">dict</span>(<span class="bu">range</span><span class="op">=</span>[<span class="dv">0</span>, <span class="dv">50</span>]))</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title <span class="op">=</span> <span class="st">'Movie Recommendations for "Emma." Fans'</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#output our figure</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_28.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
