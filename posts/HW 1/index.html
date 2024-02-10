@@ -9,7 +9,7 @@
 <meta name="author" content="Isabella Woulfe">
 <meta name="dcterms.date" content="2024-01-30">
 
-<title>Isabella Woulfe: My Blog - Data Wrangling and Visualization</title>
+<title>Isabella Woulfe: My Blog - Exploring Temperatures and Climate of the World!</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Data Wrangling and Visualization</h1>
+      <h1 class="title">Exploring Temperatures and Climate of the World!</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">Homework</div>
                 <div class="quarto-category">code</div>
@@ -193,23 +193,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="data-wrangling-and-visualization" class="level1">
-<h1>Data Wrangling and Visualization</h1>
+<section id="exploring-temperatures-and-climate-of-the-world" class="level1">
+<h1>Exploring Temperatures and Climate of the World!</h1>
+<section id="using-data-wrangling-and-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="using-data-wrangling-and-visualization">(Using Data Wrangling and Visualization)</h2>
+</section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>Today, we will be reviewing how to create interesting and interative data sets with the NOAA climate data. The data set that we will be using has a list of countries, different station names, recorded temperatures for every month of the year and more. By analyzing and organzing our data sets efficiently, we will be able to create interesting visualizations and use them to answer a variety of questions.</p>
 <p>Before we start, we must download the necessary packages to create our database. Please run the code cell bellow to import Pandas, Numpy and SQL.</p>
-<div id="cell-2" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-2" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import all of our necessary packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlite3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now that we have our packages, we will start importing three different datasets. We must save these csv files in the same folder as our Jupyter Notebook in order to use them here. In the following code cells, we will use the call stations.head() to show the first five rows of our data in a table. This step makes it easy for us to ensure that there was no problems when uploading our datasets. Please run the following code cells and then we can get started building our database.</p>
-<div id="cell-4" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"station-metadata.csv"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> pd.read_csv(filename)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>stations.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div id="cell-4" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import the data that records the location of each station making measurements</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"station-metadata.csv"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> pd.read_csv(filename)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>stations.head() <span class="co">#head will output the first five columns so that we can ensure our csv file was correctly imported</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -271,11 +276,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="cell-5" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"country-codes.csv"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> pd.read_csv(filename)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>countries.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div id="cell-5" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import the data set that organizes the names of our studied countries</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"country-codes.csv"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> pd.read_csv(filename)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>countries.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -325,11 +331,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="cell-6" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"temps.csv"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>temperatures <span class="op">=</span> pd.read_csv(filename)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>temperatures.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div id="cell-6" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import the temperature data collected from our stations in the select countries</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"temps.csv"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>temperatures <span class="op">=</span> pd.read_csv(filename)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>temperatures.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
 
@@ -449,66 +456,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="creating-and-organizing-our-database" class="level2">
 <h2 class="anchored" data-anchor-id="creating-and-organizing-our-database">Creating and Organizing our Database</h2>
 <p>Now that we have uploaded the three necessary datasets, we will create a new data frame that can be used to organize the specific data we want to use. We will use SQL to pull from our three data sets to craft out database.</p>
-<div id="cell-8" class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">"temps.db"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_iter <span class="op">=</span> pd.read_csv(<span class="st">"temps.csv"</span>, chunksize <span class="op">=</span> <span class="dv">100000</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_iter.<span class="fu">__next__</span>()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prepare_df(df):</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.set_index(keys<span class="op">=</span>[<span class="st">"ID"</span>, <span class="st">"Year"</span>])</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.stack()</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.reset_index()</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.rename(columns <span class="op">=</span> {<span class="st">"level_2"</span>  : <span class="st">"Month"</span> , <span class="dv">0</span> : <span class="st">"Temp"</span>})</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Month"</span>] <span class="op">=</span> df[<span class="st">"Month"</span>].<span class="bu">str</span>[<span class="dv">5</span>:].astype(<span class="bu">int</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Temp"</span>]  <span class="op">=</span> df[<span class="st">"Temp"</span>] <span class="op">/</span> <span class="dv">100</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-8" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#using SQL and pandas to combine our three data sets</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">"temps.db"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df_iter <span class="op">=</span> pd.read_csv(<span class="st">"temps.csv"</span>, chunksize <span class="op">=</span> <span class="dv">100000</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df_iter.<span class="fu">__next__</span>()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prepare_df(df):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.set_index(keys<span class="op">=</span>[<span class="st">"ID"</span>, <span class="st">"Year"</span>])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.stack()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.reset_index()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.rename(columns <span class="op">=</span> {<span class="st">"level_2"</span>  : <span class="st">"Month"</span> , <span class="dv">0</span> : <span class="st">"Temp"</span>})</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Month"</span>] <span class="op">=</span> df[<span class="st">"Month"</span>].<span class="bu">str</span>[<span class="dv">5</span>:].astype(<span class="bu">int</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"Temp"</span>]  <span class="op">=</span> df[<span class="st">"Temp"</span>] <span class="op">/</span> <span class="dv">100</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-9" class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_iter <span class="op">=</span> pd.read_csv(<span class="st">"temps.csv"</span>, chunksize <span class="op">=</span> <span class="dv">100000</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, df <span class="kw">in</span> <span class="bu">enumerate</span>(df_iter):</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> prepare_df(df)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    df.to_sql(<span class="st">"temperatures"</span>, conn, if_exists <span class="op">=</span> <span class="st">"replace"</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"append"</span>, index <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-9" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#continuation of combining our data sets</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_iter <span class="op">=</span> pd.read_csv(<span class="st">"temps.csv"</span>, chunksize <span class="op">=</span> <span class="dv">100000</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, df <span class="kw">in</span> <span class="bu">enumerate</span>(df_iter):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> prepare_df(df)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    df.to_sql(<span class="st">"temperatures"</span>, conn, if_exists <span class="op">=</span> <span class="st">"replace"</span> <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">"append"</span>, index <span class="op">=</span> <span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-10" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"station-metadata.csv"</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> pd.read_csv(url)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>stations.to_sql(<span class="st">"stations"</span>, conn, if_exists <span class="op">=</span> <span class="st">"replace"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="32">
+<div id="cell-10" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test to ensure we are correctly applying everything</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"station-metadata.csv"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>stations <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>stations.to_sql(<span class="st">"stations"</span>, conn, if_exists <span class="op">=</span> <span class="st">"replace"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>27585</code></pre>
 </div>
 </div>
-<div id="cell-11" class="cell" data-execution_count="38">
+<div id="cell-11" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"country-codes.csv"</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> pd.read_csv(url)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>countries.to_sql(<span class="st">"countries"</span>, conn, if_exists <span class="op">=</span> <span class="st">"replace"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="38">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>279</code></pre>
 </div>
 </div>
-<div id="cell-12" class="cell" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cursor <span class="op">=</span> conn.cursor()</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cursor.execute(<span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cursor.fetchall())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-12" class="cell" data-execution_count="72">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#outputs our column names </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cursor <span class="op">=</span> conn.cursor()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>cursor.execute(<span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cursor.fetchall())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[('temperatures',), ('country',), ('stations',), ('countries',)]</code></pre>
+<pre><code>[('temperatures',), ('stations',), ('countries',)]</code></pre>
 </div>
 </div>
 <p>We now have downloaded all of our different data sets into our folder. We will now use the following commands to create tables. We should see three seperate table headings in our output.</p>
-<div id="cell-14" class="cell" data-execution_count="135">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cursor.execute(<span class="st">"SELECT sql FROM sqlite_master WHERE type='table';"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> cursor.fetchall():</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(result[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-14" class="cell" data-execution_count="73">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creates our empty database that we will fill with our query function</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>cursor.execute(<span class="st">"SELECT sql FROM sqlite_master WHERE type='table';"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> cursor.fetchall():</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(result[<span class="dv">0</span>])</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#as our output matches our expectation, we have completed this task properly!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>CREATE TABLE "temperatures" (
 "ID" TEXT,
   "Year" INTEGER,
   "Month" INTEGER,
   "Temp" REAL
-)
-CREATE TABLE "country" (
-"FIPS 10-4" TEXT,
-  "ISO 3166" TEXT,
-  "Name" TEXT
 )
 CREATE TABLE "stations" (
 "ID" TEXT,
@@ -525,10 +534,11 @@ CREATE TABLE "countries" (
 </div>
 </div>
 <p>We will fill our database using a function in a seperate Python file. From this file, we will import our function and as a result our database. This function requires us to use SQL keywords (written in all capital letters) in order to easily combine different sorts of data into one whole set.</p>
-<div id="cell-16" class="cell" data-execution_count="136">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> climate_database <span class="im">import</span> query_climate_database</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> inspect</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inspect.getsource(query_climate_database))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-16" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#importing our function from a seperate python file saved within our folder</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> climate_database <span class="im">import</span> query_climate_database</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> inspect</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inspect.getsource(query_climate_database))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>def query_climate_database(db_file, country, year_begin, year_end, month):
     conn = sqlite3.connect(db_file)
@@ -547,14 +557,14 @@ CREATE TABLE "countries" (
 </div>
 </div>
 <p>It is very important that we test our code as we go so that we can be certain we have not encountered any errors. The code cell below will create a database for temperatures in India during January between the years of 1980 and 2020. Please run the cell below to show that we correctly implemented our database.</p>
-<div id="cell-18" class="cell" data-execution_count="137">
+<div id="cell-18" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test case for our query function </span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>query_climate_database(db_file <span class="op">=</span> <span class="st">"temps.db"</span>, </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                       country <span class="op">=</span> <span class="st">"India"</span>, </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                       year_begin <span class="op">=</span> <span class="dv">1980</span>, </span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                       year_end <span class="op">=</span> <span class="dv">2020</span>, </span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                       month <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="137">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -694,47 +704,53 @@ CREATE TABLE "countries" (
 <section id="developing-visualizations-from-our-database" class="level2">
 <h2 class="anchored" data-anchor-id="developing-visualizations-from-our-database">Developing Visualizations from our Database</h2>
 <p>Now that we have all our data from our three sets organized, we can use them to answer interesting questions. Visualizations are a great way to display data as they are super versatile and easy to read. We will use Plotly to create our data sets. Please import the Plotly package below.</p>
-<div id="cell-21" class="cell" data-execution_count="138">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-21" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#importing plotly so that we may create visualizations</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-22" class="cell" data-execution_count="139">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>pio.renderers.default<span class="op">=</span><span class="st">"iframe"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-22" class="cell" data-execution_count="68">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#creating an iframe folder so that our visualizations may be visible on our blog</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>pio.renderers.default<span class="op">=</span><span class="st">"iframe"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s get started with our first question.</p>
 <p>How does the average yearly change in temperature vary within a given country?</p>
 <p>The best way to tackle this question is through creating a geographic scatter function. This figure will appear as a map but will mark specific stations in a given country and share their temperature measurements. We will start by creating a function called tenperature_coefficient_plot(). Please follow the code written below to create our first visualization. We must be sure to include the necessary parameters and be as detailed as possible with our plots.</p>
-<div id="cell-24" class="cell" data-execution_count="141">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> temperature_coefficient_plot(db_file, country, year_begin, year_end, month, min_obs, <span class="op">**</span>kwargs):</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> query_climate_database(db_file, country, year_begin, year_end, month)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(<span class="st">'NAME'</span>)[<span class="st">'Year'</span>].transform(<span class="st">'count'</span>) <span class="op">&gt;=</span> min_obs]</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> temperature_average(data):</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> data[<span class="st">'Year'</span>]</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> data[<span class="st">'Temp'</span>]</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        average <span class="op">=</span> np.polyfit(X, y, deg<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>]</span>
+<div id="cell-24" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#our function will allow us to create out plot</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> temperature_coefficient_plot(db_file, country, year_begin, year_end, month, min_obs, <span class="op">**</span>kwargs):</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> query_climate_database(db_file, country, year_begin, year_end, month)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(<span class="st">'NAME'</span>)[<span class="st">'Year'</span>].transform(<span class="st">'count'</span>) <span class="op">&gt;=</span> min_obs]</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#average tenperature will allow us to use one measurement per station </span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> temperature_average(data):</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> data[<span class="st">'Year'</span>]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> data[<span class="st">'Temp'</span>]</span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> average</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> df.groupby(<span class="st">'NAME'</span>).<span class="bu">apply</span>(temperature_average).reset_index()</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    coefs.columns <span class="op">=</span> [<span class="st">'NAME'</span>, <span class="st">'YearlyChange'</span>]</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.merge(df, coefs, on<span class="op">=</span><span class="st">'NAME'</span>)</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter_mapbox(df, </span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>                            lat<span class="op">=</span><span class="st">'LATITUDE'</span>, </span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>                            lon<span class="op">=</span><span class="st">'LONGITUDE'</span>,</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>                            color<span class="op">=</span><span class="st">'YearlyChange'</span>,</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>                            hover_data <span class="op">=</span> {<span class="st">'NAME'</span> : <span class="va">True</span>, <span class="st">'YearlyChange'</span>: <span class="st">':.3f'</span>},</span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>                            labels <span class="op">=</span> {<span class="st">'YearlyChange'</span>: <span class="st">'Estimated Yearly Increase (Celsius)'</span>}, </span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>                            title <span class="op">=</span> <span class="ss">f"Estimates of Yearly Increase in Temperature in </span><span class="sc">{</span>pd<span class="sc">.</span>to_datetime(month, <span class="bu">format</span><span class="op">=</span><span class="st">'%m'</span>)<span class="sc">.</span>month_name()<span class="sc">}</span><span class="ss"> for stations in </span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>year_begin<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>year_end<span class="sc">}</span><span class="ss">"</span>,</span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>                            <span class="op">**</span>kwargs)</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(mapbox_style<span class="op">=</span><span class="st">"open-street-map"</span>)</span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        average <span class="op">=</span> np.polyfit(X, y, deg<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>]</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> average</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#creates columns for our visalization</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> df.groupby(<span class="st">'NAME'</span>).<span class="bu">apply</span>(temperature_average).reset_index()</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    coefs.columns <span class="op">=</span> [<span class="st">'NAME'</span>, <span class="st">'YearlyChange'</span>]</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.merge(df, coefs, on<span class="op">=</span><span class="st">'NAME'</span>)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">#this type of visualization will appear as an interactive map with data points</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter_mapbox(df, </span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>                            lat<span class="op">=</span><span class="st">'LATITUDE'</span>, </span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>                            lon<span class="op">=</span><span class="st">'LONGITUDE'</span>,</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>                            color<span class="op">=</span><span class="st">'YearlyChange'</span>,</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>                            hover_data <span class="op">=</span> {<span class="st">'NAME'</span> : <span class="va">True</span>, <span class="st">'YearlyChange'</span>: <span class="st">':.3f'</span>},</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>                            labels <span class="op">=</span> {<span class="st">'YearlyChange'</span>: <span class="st">'Estimated Yearly Increase (Celsius)'</span>}, </span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>                            title <span class="op">=</span> <span class="ss">f"Estimates of Yearly Increase in Temperature in </span><span class="sc">{</span>pd<span class="sc">.</span>to_datetime(month, <span class="bu">format</span><span class="op">=</span><span class="st">'%m'</span>)<span class="sc">.</span>month_name()<span class="sc">}</span><span class="ss"> for stations in </span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>year_begin<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>year_end<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>                            <span class="op">**</span>kwargs)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(mapbox_style<span class="op">=</span><span class="st">"open-street-map"</span>)</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will now use the following test case of India in January during 1980-2020 to test our function. As you can see, we will create a figure that appears as an interactive map that easily displays the answer to our posed question</p>
-<div id="cell-26" class="cell" data-execution_count="142">
+<div id="cell-26" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test case </span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>color_map <span class="op">=</span> px.colors.diverging.RdGy_r <span class="co"># choose a colormap</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -746,7 +762,7 @@ CREATE TABLE "countries" (
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_142.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_8.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 <p>Now, we can answer our question! For our chosen country of India, we can see that India has not experienced huge increases in temperature during the month of Januray over the period of forty years. Nevertheless, there are some stations along the coasts and borders that have seen significant increases in temperature.</p>
@@ -756,39 +772,42 @@ CREATE TABLE "countries" (
 <p>While we are programming, we want to ask questions that we can answer using our models. By asking these questions, we can connect our data sets to real world scenarios.</p>
 <p>For our next question, let’s ask which regions of the world have the highest concentration of stations recording temperature data?</p>
 <p>The best way to approach this question is to create a heatmap using our knowledge of Plotly. We can start by defining the following function. We can create the figure using specific columns from our database.</p>
-<div id="cell-29" class="cell" data-execution_count="144">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> temperature_coefficient_heatmap(db_file, country, year_begin, year_end, month, min_obs, <span class="op">**</span>kwargs):</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> query_climate_database(db_file, country, year_begin, year_end, month)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(<span class="st">'NAME'</span>)[<span class="st">'Year'</span>].transform(<span class="st">'count'</span>) <span class="op">&gt;=</span> min_obs]</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> temperature_average(data):</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> data[<span class="st">'Year'</span>]</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> data[<span class="st">'Temp'</span>]</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        average <span class="op">=</span> np.polyfit(X, y, deg<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>]</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> average</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> df.groupby(<span class="st">'NAME'</span>).<span class="bu">apply</span>(temperature_average).reset_index()</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    coefs.columns <span class="op">=</span> [<span class="st">'NAME'</span>, <span class="st">'YearlyChange'</span>]</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.merge(df, coefs, on<span class="op">=</span><span class="st">'NAME'</span>)</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co">#outputs our figure</span></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.density_mapbox(stations,</span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>                        lat <span class="op">=</span> <span class="st">"LATITUDE"</span>,</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>                        lon <span class="op">=</span> <span class="st">"LONGITUDE"</span>,</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>                        hover_data <span class="op">=</span> {<span class="st">'NAME'</span> : <span class="va">True</span>},</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>                        radius <span class="op">=</span> <span class="dv">1</span>,</span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>                        zoom <span class="op">=</span> <span class="dv">0</span>,</span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>                        height <span class="op">=</span> <span class="dv">300</span>)</span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>fig.update_layout(mapbox_style<span class="op">=</span><span class="st">"carto-positron"</span>)</span>
-<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>fig.update_layout(margin<span class="op">=</span>{<span class="st">"r"</span>:<span class="dv">0</span>,<span class="st">"t"</span>:<span class="dv">0</span>,<span class="st">"l"</span>:<span class="dv">0</span>,<span class="st">"b"</span>:<span class="dv">0</span>})</span>
-<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-29" class="cell" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#heatmap/density plot will show concentrations using different colors and a key explaining each color's signficance</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> temperature_coefficient_heatmap(db_file, country, year_begin, year_end, month, min_obs, <span class="op">**</span>kwargs):</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> query_climate_database(db_file, country, year_begin, year_end, month)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(<span class="st">'NAME'</span>)[<span class="st">'Year'</span>].transform(<span class="st">'count'</span>) <span class="op">&gt;=</span> min_obs]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> temperature_average(data):</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> data[<span class="st">'Year'</span>]</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> data[<span class="st">'Temp'</span>]</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>        average <span class="op">=</span> np.polyfit(X, y, deg<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>]</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> average</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> df.groupby(<span class="st">'NAME'</span>).<span class="bu">apply</span>(temperature_average).reset_index()</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    coefs.columns <span class="op">=</span> [<span class="st">'NAME'</span>, <span class="st">'YearlyChange'</span>]</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.merge(df, coefs, on<span class="op">=</span><span class="st">'NAME'</span>)</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co">#outputs our figure</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.density_mapbox(stations,</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>                        lat <span class="op">=</span> <span class="st">"LATITUDE"</span>,</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>                        lon <span class="op">=</span> <span class="st">"LONGITUDE"</span>,</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>                        hover_data <span class="op">=</span> {<span class="st">'NAME'</span> : <span class="va">True</span>},</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>                        radius <span class="op">=</span> <span class="dv">1</span>,</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>                        zoom <span class="op">=</span> <span class="dv">0</span>,</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>                        height <span class="op">=</span> <span class="dv">300</span>,</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>                        title <span class="op">=</span> <span class="st">"Station Concentration Map"</span>)</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title <span class="op">=</span> <span class="st">"Station Concentration Map"</span>)</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>fig.update_layout(mapbox_style<span class="op">=</span><span class="st">"carto-positron"</span>)</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>fig.update_layout(margin<span class="op">=</span>{<span class="st">"r"</span>:<span class="dv">20</span>,<span class="st">"t"</span>:<span class="dv">25</span>,<span class="st">"l"</span>:<span class="dv">20</span>,<span class="st">"b"</span>:<span class="dv">20</span>})</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="100%" height="320" src="iframe_figures/figure_144.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="100%" height="320" src="iframe_figures/figure_69.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 <p>Now that we have our plot, it is important that we understand what it is telling us. The lighter the color gets (or yellower) means that there is a higher concentration of stations recording these temperatures in our data set. In regions with only a few stations, we only note a handful of dots spread around the area.</p>
@@ -796,34 +815,35 @@ CREATE TABLE "countries" (
 <p>Finally, let’s create one more visualization and learn more about temperature using our data sets. During a twenty-year period, which part of Italy experienced higher average temperatures during the month of August: North Italy, Central Italy, or South Italy?</p>
 <p>As someone who has lived in Italy, I am very aware of the different lifestyles of the people in each of these three regions. Moreover, I would like to inquire whether climate has played a role in these cultural differences.</p>
 <p>Once again, I have decided to use a scatterplot to answer my question. However, this scatterplot will differ from the one above as it analyzes the average temperature of each station rather than the change in temperature. Please see the code below.</p>
-<div id="cell-32" class="cell" data-execution_count="145">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> regional_difference_plot(db_file, country, year_begin, year_end, month, min_obs, <span class="op">**</span>kwargs):</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> query_climate_database(db_file, country, year_begin, year_end, month)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(<span class="st">'NAME'</span>)[<span class="st">'Temp'</span>].transform(<span class="st">'count'</span>) <span class="op">&gt;=</span> min_obs]</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> temperature_average(df):</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        average <span class="op">=</span> np.mean(df[<span class="st">'Temp'</span>])</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> average</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> df.groupby(<span class="st">'NAME'</span>).<span class="bu">apply</span>(temperature_average).reset_index()</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    coefs.columns <span class="op">=</span> [<span class="st">'NAME'</span>, <span class="st">'Average Temperature'</span>]</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.merge(df, coefs, on<span class="op">=</span><span class="st">'NAME'</span>)</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter_mapbox(df, </span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>                            lat<span class="op">=</span><span class="st">'LATITUDE'</span>, </span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                            lon<span class="op">=</span><span class="st">'LONGITUDE'</span>,</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                            color<span class="op">=</span><span class="st">'Average Temperature'</span>,</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>                            hover_data <span class="op">=</span> {<span class="st">'NAME'</span> : <span class="va">True</span>, <span class="st">'Average Temperature'</span>: <span class="st">':.3f'</span>},</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                            labels <span class="op">=</span> {<span class="st">'Average Temperature'</span>: <span class="st">'Average Temperature (Celsius)'</span>}, </span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>                            title <span class="op">=</span> <span class="ss">f"Temperatures in </span><span class="sc">{</span>pd<span class="sc">.</span>to_datetime(month, <span class="bu">format</span><span class="op">=</span><span class="st">'%m'</span>)<span class="sc">.</span>month_name()<span class="sc">}</span><span class="ss"> for stations in </span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>year_begin<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>year_end<span class="sc">}</span><span class="ss">"</span>,</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>                            <span class="op">**</span>kwargs)</span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(mapbox_style<span class="op">=</span><span class="st">"open-street-map"</span>)</span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-32" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#uses a scatterplot to explore the temperature changes within a given country</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> regional_difference_plot(db_file, country, year_begin, year_end, month, min_obs, <span class="op">**</span>kwargs):</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> query_climate_database(db_file, country, year_begin, year_end, month)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(<span class="st">'NAME'</span>)[<span class="st">'Temp'</span>].transform(<span class="st">'count'</span>) <span class="op">&gt;=</span> min_obs]</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> temperature_average(df):</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        average <span class="op">=</span> np.mean(df[<span class="st">'Temp'</span>])</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> average</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    coefs <span class="op">=</span> df.groupby(<span class="st">'NAME'</span>).<span class="bu">apply</span>(temperature_average).reset_index()</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    coefs.columns <span class="op">=</span> [<span class="st">'NAME'</span>, <span class="st">'Average Temperature'</span>]</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.merge(df, coefs, on<span class="op">=</span><span class="st">'NAME'</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter_mapbox(df, </span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                            lat<span class="op">=</span><span class="st">'LATITUDE'</span>, </span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                            lon<span class="op">=</span><span class="st">'LONGITUDE'</span>,</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>                            color<span class="op">=</span><span class="st">'Average Temperature'</span>,</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>                            hover_data <span class="op">=</span> {<span class="st">'NAME'</span> : <span class="va">True</span>, <span class="st">'Average Temperature'</span>: <span class="st">':.3f'</span>},</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>                            labels <span class="op">=</span> {<span class="st">'Average Temperature'</span>: <span class="st">'Average Temperature (Celsius)'</span>}, </span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>                            title <span class="op">=</span> <span class="ss">f"Temperatures in </span><span class="sc">{</span>pd<span class="sc">.</span>to_datetime(month, <span class="bu">format</span><span class="op">=</span><span class="st">'%m'</span>)<span class="sc">.</span>month_name()<span class="sc">}</span><span class="ss"> for stations in </span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>year_begin<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>year_end<span class="sc">}</span><span class="ss">"</span>,</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>                            <span class="op">**</span>kwargs)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(mapbox_style<span class="op">=</span><span class="st">"open-street-map"</span>)</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Although we can apply this function to any country, month, or year, we will look at Italy in August over a twenty year period to develop our conclusion.</p>
-<div id="cell-34" class="cell" data-execution_count="146">
+<div id="cell-34" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test case </span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>color_map <span class="op">=</span> px.colors.diverging.RdGy_r <span class="co"># choose a colormap</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -835,11 +855,1868 @@ CREATE TABLE "countries" (
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_146.html" frameborder="0" allowfullscreen=""></iframe>
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_15.html" frameborder="0" allowfullscreen=""></iframe>
 </div>
 </div>
 <p>In our plot above, we can see that South Italian stations have the points with the deepest red. This means that the South of Italy experienced the highest average temperatures compared to both the North and Central regions. I believe that this is very fitting considering the lifestyle and daily practices of people who reside in Southern Italy.</p>
-<p>Thus, we have thoroughly reviewed how to create databases and make visualizations using our temperature data sets. Thank you for reading!</p>
+<p>Thus, we have thoroughly reviewed how to create databases and make visualizations using our temperature data sets.</p>
+</section>
+<section id="query-function-2" class="level2">
+<h2 class="anchored" data-anchor-id="query-function-2">Query Function #2</h2>
+<p>Below, we will make a second query function that we will use to further explore the data within our dataframe. Follow the code below to see how we create this new database which replace the year begin and year end columns with a single year.</p>
+<div id="cell-37" class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#importing our new query function from the same file as before</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> climate_database <span class="im">import</span> second_query_climate_database</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> inspect</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inspect.getsource(second_query_climate_database))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>def second_query_climate_database(db_file, country, year, month):
+    conn = sqlite3.connect(db_file)
+    query = f'''
+        SELECT s.NAME, s.LATITUDE, s.LONGITUDE, c.NAME AS Country, t.Year, t.Month, t.Temp
+        FROM temperatures t
+        LEFT JOIN stations s ON t.ID = s.id
+        LEFT JOIN countries c ON t.ID LIKE c."FIPS 10-4" || '%'
+        WHERE c.Name = '{country}' AND t.Year = '{year}' AND t.Month = '{month}'
+
+
+'''
+    result_df = pd.read_sql_query(query, conn)
+    conn.close()
+    return result_df
+</code></pre>
+</div>
+</div>
+<div id="cell-38" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#testing with Canada to see that our database is correctly created</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>second_query_climate_database(db_file <span class="op">=</span> <span class="st">"temps.db"</span>, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                       country <span class="op">=</span> <span class="st">"Canada"</span>, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                       year <span class="op">=</span> <span class="dv">2000</span>,  </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                       month <span class="op">=</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">NAME</th>
+<th data-quarto-table-cell-role="th">LATITUDE</th>
+<th data-quarto-table-cell-role="th">LONGITUDE</th>
+<th data-quarto-table-cell-role="th">Country</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Month</th>
+<th data-quarto-table-cell-role="th">Temp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>CHEMAINUS</td>
+<td>48.9333</td>
+<td>-123.7500</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>3.52</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>COWICHAN_LAKE_FORESTRY</td>
+<td>48.8167</td>
+<td>-124.1333</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>2.21</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>LAKE_COWICHAN</td>
+<td>48.8333</td>
+<td>-124.0500</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>1.48</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>DUNCAN_KELVIN_CREEK</td>
+<td>48.7333</td>
+<td>-123.7333</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>2.02</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>ESQUIMALT_HARBOUR</td>
+<td>48.4333</td>
+<td>-123.4333</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>4.58</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1531</td>
+<td>MAKKOVIK_A</td>
+<td>55.0833</td>
+<td>-59.1833</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>-15.06</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1532</td>
+<td>WABUSH_LAKE_A</td>
+<td>52.9333</td>
+<td>-66.8667</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>-22.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1533</td>
+<td>CHAPLEAU_ARPTSAWR</td>
+<td>47.6500</td>
+<td>-83.3500</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>-15.30</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1534</td>
+<td>FROBISHER_BAY</td>
+<td>63.8000</td>
+<td>-68.6000</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>-27.50</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1535</td>
+<td>KNOB_LAKE_QUE</td>
+<td>54.8000</td>
+<td>-66.7000</td>
+<td>Canada</td>
+<td>2000</td>
+<td>1</td>
+<td>-23.90</td>
+</tr>
+</tbody>
+</table>
+
+<p>1536 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<p>Now, we can use this new data set in interesting ways!</p>
+</section>
+<section id="multi-faceted-graphes" class="level2">
+<h2 class="anchored" data-anchor-id="multi-faceted-graphes">Multi-Faceted Graphes</h2>
+<p>Multi-faceted graphes are a great way for us to share more information through out graphes. Facets allow us to break up our graphs so that we have a figure that resembles two plots side by side. For our data set, graphs with facets are great for us to show examine the varying temperatures of two different countries. This leads us to our question, who experienced warmer temperatures in August of 2000: Brazil or Mexico?</p>
+<p>Let’s start by defininng our function! We will be using data from our second query function.</p>
+<div id="cell-41" class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> month_vs_temp(db_file, country1, country2, year, month, <span class="op">**</span>kwargs): </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>      <span class="co">#using our second query function with four inputs</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    df1 <span class="op">=</span> second_query_climate_database(db_file, country1, year, month)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    df2 <span class="op">=</span> second_query_climate_database(db_file, country2, year, month)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>      <span class="co">#defining an equation for our coefficients</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> coef(group):</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>          X <span class="op">=</span> group[<span class="st">'Year'</span>]</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>          y <span class="op">=</span> group[<span class="st">'Temp'</span>]</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>          coef <span class="op">=</span> np.polyfit(X, y, deg<span class="op">=</span><span class="dv">1</span>)[<span class="dv">0</span>]</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>          <span class="cf">return</span> coef</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>      <span class="co">#using our coefficients to combine our two countries into one graph</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    coefs1 <span class="op">=</span> df1.groupby(<span class="st">'NAME'</span>).<span class="bu">apply</span>(coef).reset_index()</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    coefs2 <span class="op">=</span> df2.groupby(<span class="st">'NAME'</span>).<span class="bu">apply</span>(coef).reset_index()</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    coefs1.columns <span class="op">=</span> [<span class="st">'NAME'</span>,<span class="st">'YearlyChange'</span>]</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    coefs1[<span class="st">'Country'</span>] <span class="op">=</span> country1</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    coefs2.columns <span class="op">=</span> [<span class="st">'NAME'</span>, <span class="st">'YearlyChange'</span>]</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>    coefs2[<span class="st">'Country'</span>] <span class="op">=</span> country2</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    coefs_combined <span class="op">=</span> pd.concat([coefs1, coefs2])</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    df1 <span class="op">=</span> pd.merge(df1, coefs1, on<span class="op">=</span><span class="st">'NAME'</span>) </span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    df2 <span class="op">=</span> pd.merge(df2, coefs2, on<span class="op">=</span><span class="st">'NAME'</span>)</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    df_combined <span class="op">=</span> pd.concat([df1, df2])</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>      <span class="co">#defining our scatterplot function</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> px.scatter(df_combined, x<span class="op">=</span><span class="st">'Month'</span>,</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>                     y<span class="op">=</span><span class="st">'Temp'</span>,</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>                     hover_data<span class="op">=</span>{<span class="st">'NAME'</span>: <span class="va">True</span>, <span class="st">'Month'</span>: <span class="va">True</span>, <span class="st">'Temp'</span> : <span class="va">True</span>},</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>                     labels<span class="op">=</span>{<span class="st">'Month'</span>: <span class="st">'Month'</span>, <span class="st">'Temp'</span>: <span class="st">'Temperature (°C)'</span>},</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>                     title<span class="op">=</span><span class="ss">f'Differences in Temperatures within a Year for </span><span class="sc">{</span>country1<span class="sc">}</span><span class="ss"> and </span><span class="sc">{</span>country2<span class="sc">}</span><span class="ss"> during August'</span>, </span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>                     facet_col<span class="op">=</span><span class="st">'Country_x'</span>,</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>                     <span class="op">**</span>kwargs)</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>    fig.update_xaxes(<span class="bu">range</span><span class="op">=</span>[<span class="dv">1</span>, <span class="dv">12</span>])</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>    fig.update_yaxes(<span class="bu">range</span><span class="op">=</span>[<span class="op">-</span><span class="dv">10</span>, <span class="dv">40</span>])</span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-42" class="cell" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#test case</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>month_vs_temp(<span class="st">'temps.db'</span>, <span class="st">"Brazil"</span>, <span class="st">"Mexico"</span>, <span class="dv">2000</span>, <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+
+c:\Users\woulf\anaconda3\envs\PIC16B-24W\Lib\site-packages\pandas\core\groupby\ops.py:767: RankWarning:
+
+Polyfit may be poorly conditioned
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<iframe scrolling="no" width="100%" height="545px" src="iframe_figures/figure_70.html" frameborder="0" allowfullscreen=""></iframe>
+</div>
+</div>
+<p>Clearly, we can see that Mexico experienced higher temperatures!</p>
+<p>Thank you for reading! Good luck with your next project!!</p>
 
 
 </section>
