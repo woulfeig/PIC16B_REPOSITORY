@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Athena Mo, Anika Misra, Isabella Woulfe">
-<meta name="dcterms.date" content="2024-03-20">
 
-<title>Isabella Woulfe: My Blog - Karaoke Generator</title>
+<title>Isabella Woulfe: My Blog - Karaoke Party At Home!!</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,31 +150,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Karaoke Generator</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">Final Project</div>
-                <div class="quarto-category">code</div>
-                <div class="quarto-category">Finals Week</div>
-              </div>
-                  </div>
+      <h1 class="title">Karaoke Party At Home!!</h1>
+                      </div>
   </div>
     
   
   <div class="quarto-title-meta">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Athena Mo, Anika Misra, Isabella Woulfe </p>
-            </div>
-    </div>
       
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">March 20, 2024</p>
-      </div>
-    </div>
     
       
     </div>
@@ -201,143 +182,169 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="by-isabella-woulfe-anika-misra-and-athena-mo">By Isabella Woulfe, Anika Misra, and Athena Mo</h3>
 <p>Our project aims to address the problem of not finding clean karaoke background tracks with simply chords for songs by Top Ten Artists. Oftentimes, people want clean instrumental versions of songs that do not have additional background vocals, additional instruments, or have required ads that you need to watch before getting access to the karaoke backtrack. Oftentimes, musicians want to layer on their own instruments and their own vocals, and quickly need the chord sounds for the song—nothing else.</p>
 <p>In general our project was divided into three main segments: gathering data using webscraping, creating music, and displaying on a a web app. Through this we successfully completed the following components: - Web scraping - Working with large and messy data - Building a dynamic website - Using packages not introduced in PIC 16A or PIC 16B</p>
-<p>Through the three following project sections, we were able to excute and interesting and interactive project.</p>
+<p>In this blog post, we will demonstrate how to use our project tools. We will begin by showing you how to run the website on your local device. Then, our next three sections will explain how to build the main components of our website: 1. Webscraper 2. Music processer 3. Webapp</p>
+<p>In this blog, we will explain how we built our project from scratch. By following along with this tutorial, you will learn the function behind each piece of the website, so that you can also customize your own Chordy website by changing the music processer, modifying the webscraper, or playing around with the format of the Webapp.</p>
+<p>Let’s get started by first running the existing website on your local device.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-1-download.jpg" class="img-fluid figure-img"></p>
+<p><img src="index_files/figure-html/cell-1-1-download.jpg" class="img-fluid figure-img"></p>
 <figcaption>download.jpg</figcaption>
 </figure>
 </div>
 </section>
 </section>
+<section id="part-0-setup-and-how-to-run-website-on-your-local-device" class="level2">
+<h2 class="anchored" data-anchor-id="part-0-setup-and-how-to-run-website-on-your-local-device">Part 0: Setup and how to run website on your local device</h2>
+<p>First, we will explain how to run the website on your local device. Note that more detailed instructions on how to run the website are located in the README file for our repisitory: https://github.com/anikamisra/PIC16B-project/blob/main/README.md</p>
+<ol type="1">
+<li><p>First, clone the github repository into your local device created for this project, located here: https://github.com/anikamisra/PIC16B-project . Here is a tutorial on how to clone a git repo: https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository</p></li>
+<li><p>Next, make sure to pip install all the required packages. These include: <strong>flask, flask_cors, dotenv, midiutil, mingus, pandas, pychord, selenium, scrapy, pymongo</strong>, and any other non-updated packages, depending on your environment.</p></li>
+<li><p>Once you are in the PIC16B-project folder on your local device, add a “.env” file with the DB password. Here is where you can find the password needed: https://github.com/anikamisra/PIC16B-project/blob/main/README.md</p></li>
+<li><p>Navigate to the “chord_scraper” folder on your local device. Ensure that “app.py” exists in this folder. Then, run this line in your terminal:</p></li>
+</ol>
+<p>flask run</p>
+<p>And you should see something like this in your terminal:</p>
+<p>mongodb+srv://Chordy:0YnrLGO4d5dxjtSc@cluster0.pirmgae.mongodb.net/ Pinged your deployment. You successfully connected to MongoDB! * Debug mode: off WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead. * Running on http://127.0.0.1:5000 Press CTRL+C to quit</p>
+<p>By pasting “http://127.0.0.1:5000” into your favorite browser, you can access Chordy and download backtracks to any top 100 song of your choice!</p>
+<p>Also, note that all of the functions in our project are contained in the <strong>“chordy_functions_package” module</strong>. So, if you want to edit any of these functions, you can easily import this module into your code and edit from there.</p>
+<p>Now that we have explained how to run the website on your local device, let us dive in to how we actually created this project.</p>
+</section>
 <section id="part-1-our-webscraper" class="level2">
 <h2 class="anchored" data-anchor-id="part-1-our-webscraper">Part 1: Our Webscraper</h2>
-<p>Before we could start creating actual music, we needed to start with gathering our data through webscraping. After lots of research, we decided the best website to gather our data from would be Chordify.net. Chordify is a platform that allows musicians of all levels to learn how to play popular songs on either the guitar, ukulele, piano, or mandolin. From this website, we collected chords and bar lengths in the form of dictionaries, the url for each individual song, and the song titles in the form of a string.</p>
-<p>To implement our scraper, we used both Scrapy and Selenium. We all had a thorough understanding of scrapy from Homework 2 but decided to pair it with Selenium to help us better navigate the websites we were scraping.</p>
-<p>After creating our scraper, we decided to organize our data into seperate csv files for each artist. By doing so, it was not only easier to work with our data but also makes for a mor eorganized experience for our website users.</p>
-<p>Here is our code for our chord_spider.py.</p>
-<div id="cell-4" class="cell">
+<p>Before we can start creating music, we need to gather the music data. We did this through webscraping. After researching, we decided to gather data from Chordify.net. Chordify is a platform that provides chords for thousands of songs, compatible with guitar, ukelele, piano, and more. From Chordify, we collected the chords of about 100 songs from the top artists in the US. We also gathered the bar lengths of each song, as well as the song titles. We stored our final data in a separate csv file for each artist, which provides for easier navigation in regards to the Webapp.</p>
+<p>Our scraper has two parts: 1. Parse the artist page and yield a song url 2. Parse song page and yield song chords in the form of a dictionary</p>
+<p>To implement our scraper, we used both Scrapy and Selenium. We learned how to use Scrapy in Homework 2, but adding Selenium allowed us more flexibility with the dynamic website style of Chordify.</p>
+<p>Also note that though our scraper only takes in one input however, it is possible to modify the scraper to accept a list of urls as opposed to a single artist url, and then scrape from there.</p>
+<p>Finally, when scraping, make sure to obey the Robot.txt for every website. In this code, the default is set to “off”, but make sure to turn it back to “on” when you run the scraper. This setting is located in the “settings.py” file of the chord scraper.</p>
+<p>Here is how we built our scraper. First, we made sure to import all the necessary packages.</p>
+<div id="cell-8" class="cell" data-tags="[]" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scrapy </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.firefox.options <span class="im">import</span> Options</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.chrome.options <span class="im">import</span> Options <span class="im">as</span> ChromeOptions</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scrapy.selector <span class="im">import</span> Selector</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scrapy.http <span class="im">import</span> Request</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># HERE IS WHAT TO PUT IN THE TERMINAL: </span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># top 10 artists US </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o results.csv -a artistname=dua-lipa</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o taylorswift.csv -a artistname=taylor-swift</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o badbunny.csv -a artistname=bad-bunny</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o theweeknd.csv -a artistname=the-weeknd</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o drake.csv -a artistname=drake</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o travisscott.csv -a artistname=travi-scott</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o beyonce.csv -a artistname=beyonce</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o michaeljackson.csv -a artistname=michael-jackson</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o ladygaga.csv -a artistname=lady-gaga</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># scrapy crawl chord_scraper -o arianagrande.csv -a artistname=ariana-grande</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> chord_scraper(scrapy.Spider): </span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">'chord_scraper'</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, artistname, <span class="op">*</span>args, <span class="op">**</span>kwargs): </span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(<span class="op">*</span>args, <span class="op">**</span>kwargs)  </span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="co"># format artist name properly </span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        artistname_formatted <span class="op">=</span> (<span class="st">"-"</span>.join(artistname.split())).lower()</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># form url of artist page </span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        artist_page_url <span class="op">=</span> <span class="st">"https://chordify.net/chords/"</span><span class="op">+</span>artistname_formatted<span class="op">+</span><span class="st">"-songs"</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="co"># need to add an error catcher for if this artist page doesn't exist </span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.start_urls <span class="op">=</span> [artist_page_url]</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># firefox option: </span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>        <span class="co">#options = Options()</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        <span class="co">#options.headless = True</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>        <span class="co">#firefox_profile = webdriver.FirefoxProfile()</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        <span class="co">#firefox_profile.set_preference("browser.privatebrowsing.autostart", True)</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        <span class="co">#self.driver = webdriver.Firefox(options=options)</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        <span class="co"># chrome option </span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        options <span class="op">=</span> ChromeOptions()</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>        options.add_argument(<span class="st">"--incognito"</span>)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>        options.add_argument(<span class="st">"--headless"</span>)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.driver <span class="op">=</span> webdriver.Chrome(options<span class="op">=</span>options)</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> parse(<span class="va">self</span>, response):</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">        Parses artist's page and returns url for each song. </span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">        Calls the parse_song_url function for each song page url. </span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.driver.get(response.url) </span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># wait for page to load </span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        time.sleep(<span class="dv">5</span>)</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>        html <span class="op">=</span> <span class="va">self</span>.driver.page_source</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>        sel <span class="op">=</span> Selector(text<span class="op">=</span>html) </span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>        <span class="co"># select the main div containing all the songs</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>        main_div <span class="op">=</span> sel.css(<span class="st">'div.s1qyqb8i.g1aau9lx'</span>)</span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> link <span class="kw">in</span> sel.css(<span class="st">'div.s1qyqb8i.g1aau9lx a::attr(href)'</span>):</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get the url for the songs </span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>            song_url <span class="op">=</span> link.get()</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>            base_url <span class="op">=</span> <span class="st">"https://chordify.net"</span> <span class="op">+</span> song_url <span class="co"># hard-coded url is okay </span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>            <span class="co"># call next scraper for the songs </span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>            <span class="cf">yield</span> scrapy.Request(url <span class="op">=</span> base_url, callback <span class="op">=</span> <span class="va">self</span>.parse_song_url)</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> parse_song_url(<span class="va">self</span>, response): </span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="co">        Parses song page and yields dictionary of chords for each song. </span></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="co">        Input is the song page from the first parse page. </span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="co">        Dictionary output contains bar number as key, and a tuple of (chord, bar length) for each value. </span></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.driver.get(response.url)</span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>        <span class="co"># wait for page to load </span></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>        time.sleep(<span class="dv">5</span>)</span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>        html <span class="op">=</span> <span class="va">self</span>.driver.page_source</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>        sel <span class="op">=</span> Selector(text<span class="op">=</span>html)</span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>        song_url <span class="op">=</span> response.url</span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>        start <span class="op">=</span> song_url.rfind(<span class="st">"/"</span>)</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>        end <span class="op">=</span> <span class="bu">len</span>(song_url) <span class="op">-</span> <span class="dv">7</span> </span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>        song_title <span class="op">=</span> song_url[start<span class="op">+</span><span class="dv">1</span>:end]</span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>        song_title <span class="op">=</span> (song_title.replace(<span class="st">'-'</span>, <span class="st">' '</span>)).title()</span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>        <span class="co"># use sel just like the response, just as we did with scrapy </span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>        div <span class="op">=</span> sel.css(<span class="st">'div.s4xyh0t &gt; div.chords'</span>)</span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>        barlength <span class="op">=</span> div.css(<span class="st">'::attr(class)'</span>).re_first(<span class="st">'barlength-(\d+)'</span>)</span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>        tags_with_i_value <span class="op">=</span> div.css(<span class="st">'[data-i]'</span>)</span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>        table <span class="op">=</span> [{<span class="st">'i-value'</span>: tag.css(<span class="st">'::attr(data-i)'</span>).get(), <span class="st">'data-handle'</span>: tag.css(<span class="st">'::attr(data-handle)'</span>).get(), <span class="st">'barlength'</span>: barlength} <span class="cf">for</span> tag <span class="kw">in</span> tags_with_i_value]</span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>        <span class="co"># create dicionary output for each song </span></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>        dict_of_chords <span class="op">=</span> <span class="bu">dict</span>()</span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> row <span class="kw">in</span> table: </span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>            i_value <span class="op">=</span> row[<span class="st">'i-value'</span>]</span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>            chord <span class="op">=</span> row[<span class="st">'data-handle'</span>]</span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>            barlength <span class="op">=</span> row[<span class="st">'barlength'</span>]</span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>            <span class="co"># make a dictionary that contains bar number in key and chord and bar length (tuple) in value. </span></span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>            dict_of_chords[i_value] <span class="op">=</span> (chord, barlength) </span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>        <span class="co"># yield the result as a dictionary</span></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> {</span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>            <span class="st">'song_name'</span>: song_title,</span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>            <span class="st">'song_url'</span>: song_url,</span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>            <span class="st">'song_chords'</span>: dict_of_chords</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> closed(<span class="va">self</span>, reason):</span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="co">        Closes the web driver. </span></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.driver.quit()</span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time   </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> inspect</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>After scraping our data from Chordify, by running the commented lines in our terminal, we received several resulting csv files. Let’s take a look for at the file for Taylor Swift using pandas!</p>
-<div id="cell-6" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"taylor-swift.csv"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(filename)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<p>Now, let’s take a look at the actual scraper itself.</p>
+<div id="cell-10" class="cell" data-tags="[]" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> chordy_functions_package <span class="im">import</span> chord_spider</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inspect.getsource(chord_spider.chord_scraper))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class chord_scraper(scrapy.Spider): 
+    name = 'chord_scraper'
+    
+    def __init__(self, artistname, *args, **kwargs):
+        """
+        Initializer for chord_scraper. Inherits from scrapy.Spider class
+        """ 
+        super().__init__(*args, **kwargs)  
+        # format artist name properly 
+        artistname_formatted = ("-".join(artistname.split())).lower()
+        
+        # form url of artist page 
+        artist_page_url = "https://chordify.net/chords/"+artistname_formatted+"-songs"
+        self.start_urls = [artist_page_url]
+        
+        # firefox option: 
+        #options = Options()
+        #options.headless = True
+        #firefox_profile = webdriver.FirefoxProfile()
+        #firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
+        #self.driver = webdriver.Firefox(options=options)
+        
+        # chrome option 
+        options = ChromeOptions()
+        options.add_argument("--incognito")
+        options.add_argument("--headless")
+
+        # set up webdriver with these options 
+        self.driver = webdriver.Chrome(options=options)
+    def parse(self, response):
+        """
+        Parses artist's page and returns url for each song. 
+        Calls the parse_song_url function for each song page url. 
+        """
+        
+        self.driver.get(response.url) 
+        # wait for page to load 
+        time.sleep(5)
+        html = self.driver.page_source
+        sel = Selector(text=html) 
+        # select the main html element containing all songs
+        main_div = sel.css('div.s1qyqb8i.g1aau9lx')
+        # iterate through each song and get the url for each song 
+        for link in sel.css('div.s1qyqb8i.g1aau9lx a::attr(href)'):
+            song_url = link.get()
+            base_url = "https://chordify.net" + song_url # hard-coded url is okay 
+            # call next scraper for the songs 
+            yield scrapy.Request(url = base_url, callback = self.parse_song_url)
+    def parse_song_url(self, response): 
+        """
+        Parses song page and yields dictionary of chords for each song. 
+        Input is the song page from the first parse page. 
+        Dictionary output contains bar number as key, and a tuple of (chord, bar length) for each value. 
+        """
+        self.driver.get(response.url)
+        # wait for page to load 
+        time.sleep(5)
+        html = self.driver.page_source
+        sel = Selector(text=html)
+        
+        # obtain song url 
+        song_url = response.url
+        # format song name by string slicing from url 
+        start = song_url.rfind("/")
+        end = len(song_url) - 7 
+        song_title = song_url[start+1:end]
+        # clean song name url 
+        song_title = (song_title.replace('-', ' ')).title()
+
+        # obtain chord elements for song 
+        div = sel.css('div.s4xyh0t &gt; div.chords')
+        # obtain bar length 
+        barlength = div.css('::attr(class)').re_first('barlength-(\d+)')
+        tags_with_i_value = div.css('[data-i]')
+        # create table of all results 
+        table = [{'i-value': tag.css('::attr(data-i)').get(), 'data-handle': tag.css('::attr(data-handle)').get(), 'barlength': barlength} for tag in tags_with_i_value]
+        # create dicionary output for each song by iterating through table 
+        dict_of_chords = dict()
+        for row in table: 
+            i_value = row['i-value']
+            chord = row['data-handle']
+            barlength = row['barlength']
+            dict_of_chords[i_value] = (chord, barlength) 
+        # yield the result as a dictionary
+        yield {
+            'song_name': song_title,
+            'song_url': song_url,
+            'song_chords': dict_of_chords
+            }
+
+    def closed(self, reason):
+        """
+        Closes the web driver. 
+        """
+        # close webdriver 
+        self.driver.quit()
+</code></pre>
+</div>
+</div>
+<p>As we can see, there are four functions defined in the web scraper.</p>
+<ol type="1">
+<li><strong>Initializer</strong>: This function initializes the webscraper. It takes in the terminal input and builds the url for the artist page. It also sets up the options for our scraper. Note that in our scraper, we used Chrome, but Firefox options are commented out for your convenience, too. The terminal input is the artist page formatted in Chordify.net format. For example, on Dua Lipa’s page, the url is: https://chordify.net/chords/dua-lipa-songs Hence, the input for this page would be “dua-lipa”. The initializer then forms the rest of the URL through simple hardcoding, since the format for each artist page is the same, and calls the first parse function.</li>
+<li><strong>Parse</strong>: This function starts on the artist page and parses through the songs of each artist. First, it waits for the page to load fully. Then, it collects the url of eachs song and passes the result to the parse_song_url function.</li>
+<li><strong>parse_song_url</strong>: This function starts on a single song page. It also waits for the page to load. It also obtains the song name by string slicing and cleaning of the song url, since the song url contains the song name. Then, it colleccts the chords for the song. It creates a dictionary value with the <strong>key</strong> as the bar number, and the value is a <strong>tuple</strong> containing the chord for that bar number, and bar length as the second argument.</li>
+<li><strong>close</strong>: This function closes the webdriver that we set up for the scraper and ends the Webdriver session.</li>
+</ol>
+<p>Output: key: bar_number, value: (chord, bar_length)</p>
+<p>Once the chords have been yielded in the dictionary format, a csv file is created for that artist. For example, here is what the csv file looks like for Taylor Swift’s page:</p>
+<div id="cell-12" class="cell" data-tags="[]" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"taylorswift.csv"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(filename)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 
 
@@ -381,387 +388,232 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>https://chordify.net/chords/taylor-swift-songs...</td>
 <td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>Back To December</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>Style 3</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>Everything Has Changed 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('F#:maj', '4'), '1': ('F#:maj', '4'), '...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>Message In A Bottle Taylor S Version From The ...</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('G:maj', '4'), '2': ('...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>Anti Hero</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>Anti Hero 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>22</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('G:maj', '4'), '1': ('G:maj', '4'), '2'...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>Lover 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('G:ma...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>song_name</td>
-<td>song_url</td>
-<td>song_chords</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
-<td>Love Story</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('D:maj', '4'), '2': ('...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
-<td>Look What You Made Me Do 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
-<td>Mean 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
-<td>You Need To Calm Down</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('D:5', '4'), '2': ('D:...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">18</td>
-<td>Our Song</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('D:ma...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">19</td>
-<td>Champagne Problems 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('C:maj', '4'), '1': ('C:maj', '4'), '2'...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">20</td>
-<td>Me</td>
-<td>https://chordify.net/chords/taylor-swift-featu...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">21</td>
-<td>Cruel Summer</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('A:ma...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">22</td>
-<td>Stay Stay Stay Taylor S Version</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('C:maj', '4'), '1': ('C:maj', '4'), '2'...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">23</td>
-<td>Willow</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('E:min', '4'), '2': ('...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">24</td>
-<td>I Knew You Were Trouble 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">25</td>
-<td>August</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">26</td>
-<td>Everything Has Changed 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('F#:maj', '4'), '1': ('F#:maj', '4'), '...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">27</td>
-<td>Opening</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">28</td>
-<td>Back To December</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">29</td>
-<td>Message In A Bottle Taylor S Version From The ...</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('G:maj', '4'), '2': ('...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">30</td>
-<td>Style 3</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">31</td>
-<td>Anti Hero 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">32</td>
-<td>Wildest Dreams</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('Db:maj', '4'), '1': ('Db:maj', '4'), '...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">33</td>
-<td>Shake It Off Music Video</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('C:maj', '4'), '1': ('N', '4'), '2': ('...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">34</td>
-<td>Anti Hero</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">35</td>
-<td>Lover 2</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('G:ma...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">36</td>
-<td>Blank Space</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">37</td>
-<td>Run Taylor S Version From The Vault</td>
-<td>https://chordify.net/chords/taylor-swift-feat-...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">38</td>
-<td>All Too Well 10 Minute Version Taylor S Versio...</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">39</td>
-<td>22</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('G:maj', '4'), '1': ('G:maj', '4'), '2'...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">40</td>
-<td>Exile</td>
-<td>https://chordify.net/chords/taylor-swift-featu...</td>
-<td>{'0': ('N', '4'), '1': ('F#:maj', '4'), '2': (...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">41</td>
-<td>You Belong With Me 3</td>
-<td>https://chordify.net/chords/taylor-swift-songs...</td>
-<td>{'0': ('N', '4'), '1': ('F#:maj', '4'), '2': (...</td>
-</tr>
 </tbody>
 </table>
 
 </div>
 </div>
 </div>
+<p>But what do we put in the terminal? First, make sure you have cloned the github repisitory. Then, navigate to the chord_scraper folder that contains “spiders”. After running</p>
+<p>ls</p>
+<p>In your terminal, if you see “settings.py” in the output, you are in the right folder. Then, if you want to scrape the top 10 artists’ pages, you would run the following lines in your terminal.</p>
+<ul>
+<li>scrapy crawl chord_scraper -o results.csv -a artistname=dua-lipa</li>
+<li>scrapy crawl chord_scraper -o taylorswift.csv -a artistname=taylor-swift</li>
+<li>scrapy crawl chord_scraper -o badbunny.csv -a artistname=bad-bunny</li>
+<li>scrapy crawl chord_scraper -o theweeknd.csv -a artistname=the-weeknd</li>
+<li>scrapy crawl chord_scraper -o drake.csv -a artistname=drake</li>
+<li>scrapy crawl chord_scraper -o travisscott.csv -a artistname=travi-scott</li>
+<li>scrapy crawl chord_scraper -o beyonce.csv -a artistname=beyonce</li>
+<li>scrapy crawl chord_scraper -o michaeljackson.csv -a artistname=michael-jackson</li>
+<li>scrapy crawl chord_scraper -o ladygaga.csv -a artistname=lady-gaga</li>
+<li>scrapy crawl chord_scraper -o arianagrande.csv -a artistname=ariana-grande</li>
+</ul>
+<p>More ideas: In the future, you can play around with what we have built. For example, you can scrape <strong>other artists</strong> besides just the top 10. In the “artistname” argument in the terminal, just make sure to input the properly formatted name of the artist you would like to see. Furthermore, for faster scraping, you can also edit the initializer of the webscraper to take in a <strong>list of urls</strong> as opposed to just a single url at a time. However, we did not find this necessary as we were only scraping 10 artists.</p>
 <p>Now that we have successfully created our csv files, we can extract this data and use it in our next step to create some great tracks!</p>
 </section>
-<section id="part-2-music-generating-file" class="level2">
-<h2 class="anchored" data-anchor-id="part-2-music-generating-file">Part 2: Music Generating File</h2>
-<p>For our project, we really wanted to look outside the scope of this course and try something completely new. Our goal with this project was to create actual music in the form of audio files that users could listen and sing along to. In order to achieve this goal, we had to research other Python packages. Thanks to several different websites, most notably an article on Medium.com by Steve Hiehn.</p>
+<section id="part-2-music-generating-function" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-music-generating-function">Part 2: Music Generating Function</h2>
+<p>For our project, we really wanted to look outside the scope of this course and try something completely new. Our goal with this project was to create actual music in the form of audio files that users could listen and sing along to. In order to achieve this goal, we had to research other Python packages. Thanks to several different websites, most notably an article on Medium.com by Steve Hiehn: https://medium.com/<span class="citation" data-cites="stevehiehn/how-to-generate-music-with-python-the-basics-62e8ea9b99a5">@stevehiehn/how-to-generate-music-with-python-the-basics-62e8ea9b99a5</span>, we were able to create the function to generate music.</p>
 <p>The first package we used was <strong>MIDIUtil</strong>. This specific allowed us to create an audiofile using the notes and chords we obtained in our data set. The next two packages we used helped our system understand different music terms and what they mean. These two functions are called <strong>mingus.core</strong> and <strong>pychord</strong>. These packages allow us to use note and chord names in our code and they will relate to the correct idea in music. We also continued to use Pandas to extract different elements within our dataset.</p>
+<div id="cell-20" class="cell" data-tags="[]" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#importing all of the necessary packages</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> midiutil <span class="im">import</span> MIDIFile</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mingus.core <span class="im">import</span> chords</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pychord <span class="im">import</span> Chord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>After downloading the necessary packages and ensuring we had the necessary data, we needed clean and reorganize our chord data. At this time, all of our chords were organized in different dictionaries. Using Pandas, we were able to pull out the chord names (in the form of strings) and organize them into a list. We then organized our elements of the list so they were in a form that Mingus.core and Pychord would recognize. Once we had all of the chords, we used our packages to create a list of the corresponding notes.</p>
-<p>Finally, we developed a function, thanks to Steve Hiehn’s guidance, that creates an audio file out of the list of notes with a given tempo and volume. Please see the code below.</p>
-<div id="cell-9" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> midiutil <span class="im">import</span> MIDIFile</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mingus.core <span class="im">import</span> chords</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pychord <span class="im">import</span> Chord</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>OCTAVES <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">11</span>))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> {</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'error!!!'</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_csvpath_from_file():</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'config.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">file</span>:</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> line.startswith(<span class="st">'csv_path'</span>):</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                variable_value <span class="op">=</span> line.split(<span class="st">'='</span>)[<span class="dv">1</span>].strip().strip(<span class="st">'"'</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> variable_value</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_index_from_file():</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'config.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">file</span>:</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> line.startswith(<span class="st">'user_song'</span>):</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                variable_value <span class="op">=</span> line.split(<span class="st">'='</span>)[<span class="dv">1</span>].strip().strip(<span class="st">'"'</span>)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> variable_value</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>csvpath <span class="op">=</span> read_csvpath_from_file()</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(csvpath)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>df.head()</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(csvpath)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> read_index_from_file()</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>index <span class="op">=</span> <span class="bu">int</span>(index)</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>song_name <span class="op">=</span> df.iloc[index, <span class="dv">0</span>]</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>chords_string <span class="op">=</span> df.loc[df[<span class="st">'song_name'</span>] <span class="op">==</span> song_name, <span class="st">'song_chords'</span>].values[<span class="dv">0</span>]</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>NOTES <span class="op">=</span> [<span class="st">'C'</span>, <span class="st">'C#'</span>, <span class="st">'D'</span>, <span class="st">'Eb'</span>, <span class="st">'E'</span>, <span class="st">'F'</span>, <span class="st">'F#'</span>, <span class="st">'G'</span>, <span class="st">'Ab'</span>, <span class="st">'A'</span>, <span class="st">'Bb'</span>, <span class="st">'B'</span>]</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>OCTAVES <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">11</span>))</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>NOTES_IN_OCTAVE <span class="op">=</span> <span class="bu">len</span>(NOTES)</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>chords <span class="op">=</span> ast.literal_eval(chords_string)</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>extracted_strings <span class="op">=</span> []</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="co"># iterate through dictionary values </span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, value <span class="kw">in</span> chords.items():</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    extracted_strings.append(value[<span class="dv">0</span>])  <span class="co"># Append the first element of the tuple</span></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co"># get barlength </span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>first_item <span class="op">=</span> <span class="bu">list</span>(chords.keys())[<span class="dv">0</span>]</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>bar_length <span class="op">=</span> chords[first_item][<span class="dv">1</span>]</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="co"># clean up webscraper code </span></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>original_list <span class="op">=</span> extracted_strings</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove semicolons from each string</span></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>cleaned_list <span class="op">=</span> [s.replace(<span class="st">':'</span>, <span class="st">''</span>) <span class="cf">for</span> s <span class="kw">in</span> original_list]</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> chords_to_notes(chord_list):</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="co">    Given a list of chord names, returns a list of corresponding notes.</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    notes_list <span class="op">=</span> []</span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> chord_name <span class="kw">in</span> chord_list:</span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> chord_name <span class="op">==</span> <span class="st">'N'</span>:</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Handle the special case of a rest</span></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>            notes_list.append(<span class="st">''</span>)</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>                chord <span class="op">=</span> Chord(chord_name)</span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>                notes <span class="op">=</span> chord.components()</span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Filter out numeric indices (only keep strings)</span></span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>                notes <span class="op">=</span> [note <span class="cf">for</span> note <span class="kw">in</span> notes <span class="cf">if</span> <span class="bu">isinstance</span>(note, <span class="bu">str</span>)]</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>                notes_list.extend(notes)</span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> <span class="pp">ValueError</span>:</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Handle invalid chord names gracefully</span></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>                <span class="cf">pass</span></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> notes_list</span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>chord_names <span class="op">=</span> cleaned_list</span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>resulting_notes <span class="op">=</span> chords_to_notes(chord_names)</span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> swap_accidentals(note):</span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> note <span class="op">==</span> <span class="st">'Db'</span>:</span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'C#'</span></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> note <span class="op">==</span> <span class="st">'D#'</span>:</span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'Eb'</span></span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> note <span class="op">==</span> <span class="st">'E#'</span>:</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'F'</span></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> note <span class="op">==</span> <span class="st">'Gb'</span>:</span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'F#'</span></span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> note <span class="op">==</span> <span class="st">'G#'</span>:</span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'Ab'</span></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> note <span class="op">==</span> <span class="st">'A#'</span>:</span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'Bb'</span></span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> note <span class="op">==</span> <span class="st">'B#'</span>:</span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">'C'</span></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> note</span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> note_to_number(note: <span class="bu">str</span>, octave: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>    note <span class="op">=</span> swap_accidentals(note)</span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> note <span class="kw">in</span> NOTES, errors[<span class="st">'notes'</span>]</span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> octave <span class="kw">in</span> OCTAVES, errors[<span class="st">'notes'</span>]</span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>    note <span class="op">=</span> NOTES.index(note)</span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>    note <span class="op">+=</span> (NOTES_IN_OCTAVE <span class="op">*</span> octave)</span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="dv">0</span> <span class="op">&lt;=</span> note <span class="op">&lt;=</span> <span class="dv">127</span>, errors[<span class="st">'notes'</span>]</span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> note</span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>chord_progression <span class="op">=</span> resulting_notes </span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span> </span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>chord_progression <span class="op">=</span> [chord <span class="cf">for</span> chord <span class="kw">in</span> chord_progression <span class="cf">if</span> chord.strip() <span class="op">!=</span> <span class="st">''</span>]</span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"chord progresion"</span>, chord_progression)</span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>array_of_notes <span class="op">=</span> []</span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> note <span class="kw">in</span> chord_progression: </span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>    array_of_notes.append(note)</span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"array of notes"</span>, array_of_notes)</span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(chord_progression[<span class="dv">0</span>]))</span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>array_of_note_numbers <span class="op">=</span> []</span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> note <span class="kw">in</span> array_of_notes:</span>
-<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>    OCTAVE <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>    array_of_note_numbers.append(note_to_number(note, OCTAVE))</span>
-<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>track <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>channel <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> <span class="dv">0</span>  <span class="co"># In beats</span></span>
-<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>duration <span class="op">=</span> <span class="dv">1</span>  <span class="co"># In beats</span></span>
-<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>tempo <span class="op">=</span> <span class="dv">120</span><span class="op">*</span><span class="bu">int</span>(bar_length)  <span class="co"># In BPM</span></span>
-<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>volume <span class="op">=</span> <span class="dv">100</span>  <span class="co"># 0-127, as per the MIDI standard</span></span>
-<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>MyMIDI <span class="op">=</span> MIDIFile(<span class="dv">1</span>)  <span class="co"># One track, defaults to format 1 (tempo track is created</span></span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="co"># automatically)</span></span>
-<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>MyMIDI.addTempo(track, time, tempo)</span>
-<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, pitch <span class="kw">in</span> <span class="bu">enumerate</span>(array_of_note_numbers):</span>
-<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>    MyMIDI.addNote(track, channel, pitch, time <span class="op">+</span> i, duration, volume)</span>
-<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"chord_scraper/test.mid"</span>, <span class="st">"wb"</span>) <span class="im">as</span> output_file:</span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>    MyMIDI.writeFile(output_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next, we developed a function, thanks to Steve Hiehn’s guidance, that creates an audio file out of the list of notes with a given tempo and volume. Please see the code below. The function was able to identify the sound/octave that corresponds to each string containing the name of a note. Additionally, we need to account for notes that have varying names in order to prevent any errors. We did this by writing a short function that contained several “if” loops which would change the note names. At the end of the code cell, there are a few more set values that may cary in between songs that allow for changes to the tempo, volume, and more.</p>
+<div id="cell-22" class="cell" data-tags="[]" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> chordy_functions_package <span class="im">import</span> app</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inspect.getsource(app.musicpackage))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>def musicpackage():
+    """
+    Main function for processing music data.
+    Reads chords data from a CSV file, converts chords to notes,
+    and generates a MIDI file based on the chord progression.
+    """
+
+    NOTES = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
+    OCTAVES = list(range(11))
+    NOTES_IN_OCTAVE = len(NOTES)
+
+    errors = {
+        'There was an error.'
+    }
+    def read_csvpath_from_file():
+        """
+        Reads from the config.txt file.
+        Returns the content of line named "cs_path"
+        """
+        with open('config.txt', 'r') as file:
+            for line in file:
+                if line.startswith('csv_path'):
+                    variable_value = line.split('=')[1].strip().strip('"')
+                    return variable_value
+        return None
+
+    def read_index_from_file():
+        """
+         Reads from the config.txt file.
+         Returns the content of line named "user_song"
+         """
+        with open('config.txt', 'r') as file:
+            for line in file:
+                if line.startswith('user_song'):
+                    variable_value = line.split('=')[1].strip().strip('"')
+                    return variable_value
+        return None
+    
+    # take in csv file created by webscraper 
+    csvpath = read_csvpath_from_file()
+    df = pd.read_csv(csvpath)
+    df.head()
+    df = pd.read_csv(csvpath)
+    index = read_index_from_file()
+    # obtain index, song name, and chords 
+    index = int(index)
+    song_name = df.iloc[index, 0]
+    chords_string = df.loc[df['song_name'] == song_name, 'song_chords'].values[0]
+
+    # turn chords into dictionary 
+    chords = ast.literal_eval(chords_string)
+    extracted_strings = []
+    # iterate through dictionary values
+    for key, value in chords.items():
+        extracted_strings.append(value[0])  # Append the first element of the tuple
+    # get barlength
+    first_item = list(chords.keys())[0]
+    bar_length = chords[first_item][1]
+
+    # clean up webscraper code
+    original_list = extracted_strings
+    # Remove semicolons from each string
+    cleaned_list = [s.replace(':', '') for s in original_list]
+
+    def chords_to_notes(chord_list):
+        """
+        Given a list of chord names, returns a list of corresponding notes.
+        """
+        notes_list = []
+        for chord_name in chord_list:
+            if chord_name == 'N':
+                # Handle the special case of a rest
+                notes_list.append('')
+            else:
+                try:
+                    chord = Chord(chord_name)
+                    notes = chord.components()
+                    # filter out numeric indices (only keep strings)
+                    notes = [note for note in notes if isinstance(note, str)]
+                    notes_list.extend(notes)
+                except ValueError:
+                    # for handling invalid chord names
+                    pass
+        return notes_list
+
+    chord_names = cleaned_list
+    resulting_notes = chords_to_notes(chord_names)
+
+    def swap_accidentals(note):
+        """
+        Function to swap accidentals and avoid errors / redundant notes. 
+        In music theory, this refers to two notes with the same name. 
+        """
+        if note == 'Db':
+            return 'C#'
+        if note == 'D#':
+            return 'Eb'
+        if note == 'E#':
+            return 'F'
+        if note == 'Gb':
+            return 'F#'
+        if note == 'G#':
+            return 'Ab'
+        if note == 'A#':
+            return 'Bb'
+        if note == 'B#':
+            return 'C'
+
+        return note
+
+    def note_to_number(note: str, octave: int) -&gt; int:
+        """
+        Takes in note in string format, name value. 
+        Returns numeric value of each note. 
+        """
+        note = swap_accidentals(note)
+        assert note in NOTES, errors['notes']
+        assert octave in OCTAVES, errors['notes']
+
+        note = NOTES.index(note)
+        note += (NOTES_IN_OCTAVE * octave)
+
+        assert 0 &lt;= note &lt;= 127, errors['notes']
+
+        return note
+
+    chord_progression = resulting_notes
+    i = 0
+    # remove all spaces from chord progression
+    chord_progression = [chord for chord in chord_progression if chord.strip() != '']
+    #print("chord progresion", chord_progression) # for debugging 
+    array_of_notes = []
+    for note in chord_progression:
+        array_of_notes.append(note)
+    print("array of notes", array_of_notes)
+    #print(type(chord_progression[0])) # for debugging 
+
+    # create array of all note numbers 
+    array_of_note_numbers = []
+    for note in array_of_notes:
+        OCTAVE = 4
+        array_of_note_numbers.append(note_to_number(note, OCTAVE))
+    
+    # set parameters for music file 
+    track = 0
+    channel = 0
+    time = 0  # In beats
+    duration = 1  # In beats
+    tempo = 120 * int(bar_length)  # In BPM
+    volume = 100  # 0-127, as per the MIDI standard
+
+    MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created
+    # automatically)
+    MyMIDI.addTempo(track, time, tempo)
+
+    for i, pitch in enumerate(array_of_note_numbers):
+        MyMIDI.addNote(track, channel, pitch, time + i, duration, volume)
+
+    with open("chord_scraper/yourmusic.mid", "wb") as output_file:
+        MyMIDI.writeFile(output_file)
+</code></pre>
+</div>
+</div>
+<p>Finally, used the MIDIUtil package to create our audio file based on the list of notes and octaves that follows the given interger values for track, tempo, and time. For users on a Mac system, the output file will download to their device in the form of a mid file that can be played in the app “Garage Band”. For Windows system users, the output file will download into the file app of the device and can be played directly from there as a mid file. You can see this last part in the last lines of the musicpackage() function above.</p>
+<p>This series of functions required each of us to gather a basic understanding of music theory and different files types in addition to the appilcations of Python methods we learned in class. Even though there was a lot of new content that we needed to learn on our own, we still were able to gather great experience with data cleaning. We implemented our understanding of Pandas and pulled data directly from our data frame. We worked to change string names and used a lot of trial and error to identify which formats worked best for the packages we were using to make the music. Additionally, we reorganized our data so that we could take elements of the dictionary we received from our scraper and turn it into a list with only the necessary strings. Although this process took a lot of different approaches and constant changes, we successfully created audio files that match some of our favorite hit songs.</p>
+<p>For example, here is what the original CSV notes for “Don’t start now” by Dua Lipa looked like before we ran our music package:</p>
+<div id="cell-25" class="cell" data-tags="[]" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"dualipa.csv"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>row1 <span class="op">=</span> df.iloc[<span class="dv">1</span>]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(row1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>song_name                                                Houdini
+song_url       https://chordify.net/chords/dua-lipa-songs/hou...
+song_chords    {'0': ('N', '4'), '1': ('N', '4'), '2': ('N', ...
+Name: 1, dtype: object</code></pre>
+</div>
+</div>
+<p>And here is what that same song looks like translated as an audio file into Garageband:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-27-1-17987da3-5b2f-4300-89bb-b3ae5c859a58.png" class="img-fluid figure-img"></p>
+<figcaption>Screenshot 2024-03-22 at 8.01.22 PM.png</figcaption>
+</figure>
 </div>
 <p>Now that we are able to create audiofiles and link to the data that our webscraper collected, we are ready to organize and present it all in flask!!</p>
 </section>
@@ -772,304 +624,380 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After completing these first steps, our users will be directed to our app home page. From here, they will have the option to pick from one of our amazing Top Ten artists to see a list of tracks that we offer for some fun sing-alongs.</p>
 <p>Finally, once an artist is selected, the user will input a song and then be redircted to the download. In the event that our user ask for a song that does not exist, we have equipped our webapp to output the appropriate error message.</p>
 <p>Included below is the code contained in our app.py file that was used to create our site.</p>
-<div id="cell-12" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, render_template, request, redirect, url_for, session, send_file</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> jsonify</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask_cors <span class="im">import</span> CORS</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> difflib</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .db <span class="im">import</span> Database, User</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> midiutil <span class="im">import</span> MIDIFile</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mingus.core <span class="im">import</span> chords</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ast</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pychord <span class="im">import</span> Chord</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>app.secret_key <span class="op">=</span> os.urandom(<span class="dv">24</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>CORS(app, supports_credentials<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>load_dotenv(<span class="st">".env"</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>database <span class="op">=</span> Database(os.getenv(<span class="st">"DB_PSWD"</span>))</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> musicpackage():</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    OCTAVES <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">11</span>))</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    errors <span class="op">=</span> {</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">'error!!!'</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">########</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ATHENA THIS IS WHERE WE EDIT</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> read_csvpath_from_file():</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'config.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">file</span>:</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> line.startswith(<span class="st">'csv_path'</span>):</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>                    variable_value <span class="op">=</span> line.split(<span class="st">'='</span>)[<span class="dv">1</span>].strip().strip(<span class="st">'"'</span>)</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span> variable_value</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> read_index_from_file():</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'config.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">file</span>:</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> line.startswith(<span class="st">'user_song'</span>):</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>                    variable_value <span class="op">=</span> line.split(<span class="st">'='</span>)[<span class="dv">1</span>].strip().strip(<span class="st">'"'</span>)</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span> variable_value</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    csvpath <span class="op">=</span> read_csvpath_from_file()</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(csvpath)</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    df.head()</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(csvpath)</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    index <span class="op">=</span> read_index_from_file()</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    index <span class="op">=</span> <span class="bu">int</span>(index)</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    song_name <span class="op">=</span> df.iloc[index, <span class="dv">0</span>]</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    chords_string <span class="op">=</span> df.loc[df[<span class="st">'song_name'</span>] <span class="op">==</span> song_name, <span class="st">'song_chords'</span>].values[<span class="dv">0</span>]</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># DONE WITH EDITS</span></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    <span class="co">###############</span></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    NOTES <span class="op">=</span> [<span class="st">'C'</span>, <span class="st">'C#'</span>, <span class="st">'D'</span>, <span class="st">'Eb'</span>, <span class="st">'E'</span>, <span class="st">'F'</span>, <span class="st">'F#'</span>, <span class="st">'G'</span>, <span class="st">'Ab'</span>, <span class="st">'A'</span>, <span class="st">'Bb'</span>, <span class="st">'B'</span>]</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    OCTAVES <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">11</span>))</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    NOTES_IN_OCTAVE <span class="op">=</span> <span class="bu">len</span>(NOTES)</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    chords <span class="op">=</span> ast.literal_eval(chords_string)</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    extracted_strings <span class="op">=</span> []</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># iterate through dictionary values</span></span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key, value <span class="kw">in</span> chords.items():</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        extracted_strings.append(value[<span class="dv">0</span>])  <span class="co"># Append the first element of the tuple</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    <span class="co"># get barlength</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    first_item <span class="op">=</span> <span class="bu">list</span>(chords.keys())[<span class="dv">0</span>]</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    bar_length <span class="op">=</span> chords[first_item][<span class="dv">1</span>]</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># clean up webscraper code</span></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    original_list <span class="op">=</span> extracted_strings</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove semicolons from each string</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    cleaned_list <span class="op">=</span> [s.replace(<span class="st">':'</span>, <span class="st">''</span>) <span class="cf">for</span> s <span class="kw">in</span> original_list]</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> chords_to_notes(chord_list):</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""</span></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="co">        Given a list of chord names, returns a list of corresponding notes.</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a><span class="co">        """</span></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>        notes_list <span class="op">=</span> []</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> chord_name <span class="kw">in</span> chord_list:</span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> chord_name <span class="op">==</span> <span class="st">'N'</span>:</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Handle the special case of a rest</span></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>                notes_list.append(<span class="st">''</span>)</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>                <span class="cf">try</span>:</span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>                    chord <span class="op">=</span> Chord(chord_name)</span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>                    notes <span class="op">=</span> chord.components()</span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Filter out numeric indices (only keep strings)</span></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>                    notes <span class="op">=</span> [note <span class="cf">for</span> note <span class="kw">in</span> notes <span class="cf">if</span> <span class="bu">isinstance</span>(note, <span class="bu">str</span>)]</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>                    notes_list.extend(notes)</span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>                <span class="cf">except</span> <span class="pp">ValueError</span>:</span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Handle invalid chord names gracefully</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">pass</span></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> notes_list</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>    chord_names <span class="op">=</span> cleaned_list</span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>    resulting_notes <span class="op">=</span> chords_to_notes(chord_names)</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> swap_accidentals(note):</span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> note <span class="op">==</span> <span class="st">'Db'</span>:</span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">'C#'</span></span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> note <span class="op">==</span> <span class="st">'D#'</span>:</span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">'Eb'</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> note <span class="op">==</span> <span class="st">'E#'</span>:</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">'F'</span></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> note <span class="op">==</span> <span class="st">'Gb'</span>:</span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">'F#'</span></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> note <span class="op">==</span> <span class="st">'G#'</span>:</span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">'Ab'</span></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> note <span class="op">==</span> <span class="st">'A#'</span>:</span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">'Bb'</span></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> note <span class="op">==</span> <span class="st">'B#'</span>:</span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">'C'</span></span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> note</span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> note_to_number(note: <span class="bu">str</span>, octave: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>        note <span class="op">=</span> swap_accidentals(note)</span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> note <span class="kw">in</span> NOTES, errors[<span class="st">'notes'</span>]</span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> octave <span class="kw">in</span> OCTAVES, errors[<span class="st">'notes'</span>]</span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>        note <span class="op">=</span> NOTES.index(note)</span>
-<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>        note <span class="op">+=</span> (NOTES_IN_OCTAVE <span class="op">*</span> octave)</span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> <span class="dv">0</span> <span class="op">&lt;=</span> note <span class="op">&lt;=</span> <span class="dv">127</span>, errors[<span class="st">'notes'</span>]</span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> note</span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>    chord_progression <span class="op">=</span> resulting_notes</span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a>    chord_progression <span class="op">=</span> [chord <span class="cf">for</span> chord <span class="kw">in</span> chord_progression <span class="cf">if</span> chord.strip() <span class="op">!=</span> <span class="st">''</span>]</span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"chord progresion"</span>, chord_progression)</span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>    array_of_notes <span class="op">=</span> []</span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> note <span class="kw">in</span> chord_progression:</span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a>        array_of_notes.append(note)</span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"array of notes"</span>, array_of_notes)</span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">type</span>(chord_progression[<span class="dv">0</span>]))</span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a>    array_of_note_numbers <span class="op">=</span> []</span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> note <span class="kw">in</span> array_of_notes:</span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a>        OCTAVE <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>        array_of_note_numbers.append(note_to_number(note, OCTAVE))</span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>    track <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>    channel <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="dv">0</span>  <span class="co"># In beats</span></span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a>    duration <span class="op">=</span> <span class="dv">1</span>  <span class="co"># In beats</span></span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>    tempo <span class="op">=</span> <span class="dv">120</span> <span class="op">*</span> <span class="bu">int</span>(bar_length)  <span class="co"># In BPM</span></span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>    volume <span class="op">=</span> <span class="dv">100</span>  <span class="co"># 0-127, as per the MIDI standard</span></span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a>    MyMIDI <span class="op">=</span> MIDIFile(<span class="dv">1</span>)  <span class="co"># One track, defaults to format 1 (tempo track is created</span></span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a>    <span class="co"># automatically)</span></span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>    MyMIDI.addTempo(track, time, tempo)</span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, pitch <span class="kw">in</span> <span class="bu">enumerate</span>(array_of_note_numbers):</span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>        MyMIDI.addNote(track, channel, pitch, time <span class="op">+</span> i, duration, volume)</span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">"chord_scraper/test.mid"</span>, <span class="st">"wb"</span>) <span class="im">as</span> output_file:</span>
-<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>        MyMIDI.writeFile(output_file)</span>
-<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> write_variable_to_file(new_value):</span>
-<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'config.txt'</span>, <span class="st">'r+'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
-<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.seek(<span class="dv">0</span>)</span>
-<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> line.startswith(<span class="st">'csv_path'</span>):</span>
-<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>                <span class="bu">file</span>.write(<span class="ss">f'csv_path = "</span><span class="sc">{</span>new_value<span class="sc">}</span><span class="ss">"</span><span class="ch">\n</span><span class="ss">'</span>)</span>
-<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>                <span class="bu">file</span>.write(line)</span>
-<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.truncate()</span>
-<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> write_variable_to_file2(new_value):</span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'config.txt'</span>, <span class="st">'r+'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
-<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.seek(<span class="dv">0</span>)</span>
-<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> line.startswith(<span class="st">'user_song'</span>):</span>
-<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>                <span class="bu">file</span>.write(<span class="ss">f'user_song = "</span><span class="sc">{</span>new_value<span class="sc">}</span><span class="ss">"</span><span class="ch">\n</span><span class="ss">'</span>)</span>
-<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>                <span class="bu">file</span>.write(line)</span>
-<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.truncate()</span>
-<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> write_variable_to_file3(new_value):</span>
-<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'config.txt'</span>, <span class="st">'r+'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> <span class="bu">file</span>.readlines()</span>
-<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.seek(<span class="dv">0</span>)</span>
-<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> line.startswith(<span class="st">'result'</span>):</span>
-<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>                <span class="bu">file</span>.write(<span class="ss">f'result = "</span><span class="sc">{</span>new_value<span class="sc">}</span><span class="ss">"</span><span class="ch">\n</span><span class="ss">'</span>)</span>
-<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a>                <span class="bu">file</span>.write(line)</span>
-<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>        <span class="bu">file</span>.truncate()</span>
-<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_csvpath_from_file():</span>
-<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">'config.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> line <span class="kw">in</span> <span class="bu">file</span>:</span>
-<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> line.startswith(<span class="st">'csv_path'</span>):</span>
-<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>                variable_value <span class="op">=</span> line.split(<span class="st">'='</span>)[<span class="dv">1</span>].strip().strip(<span class="st">'"'</span>)</span>
-<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> variable_value</span>
-<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/'</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
-<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> index():</span>
-<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'username'</span> <span class="kw">in</span> session:</span>
-<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'index.html'</span>, username<span class="op">=</span>session[<span class="st">'username'</span>])</span>
-<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> redirect(url_for(<span class="st">'login'</span>))</span>
-<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/login'</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
-<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> login():</span>
-<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
-<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a>        username <span class="op">=</span> request.form[<span class="st">'username'</span>]</span>
-<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a>        password <span class="op">=</span> request.form[<span class="st">'password'</span>]</span>
-<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> database.verify_user(username, password):</span>
-<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a>            session[<span class="st">'username'</span>] <span class="op">=</span> username</span>
-<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> redirect(url_for(<span class="st">'index'</span>))</span>
-<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> render_template(<span class="st">'login.html'</span>, error<span class="op">=</span><span class="st">"Invalid username or password."</span>)</span>
-<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'login.html'</span>)</span>
-<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/createAccount'</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
-<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_account():</span>
-<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
-<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>        username <span class="op">=</span> request.form[<span class="st">'username'</span>]</span>
-<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>        password <span class="op">=</span> request.form[<span class="st">'password'</span>]</span>
-<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> database.add_user(User(username, password)):</span>
-<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>            session[<span class="st">'username'</span>] <span class="op">=</span> username</span>
-<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> redirect(url_for(<span class="st">'index'</span>))</span>
-<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> render_template(<span class="st">'create_account.html'</span>, error<span class="op">=</span><span class="st">"Username already exists."</span>)</span>
-<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'create_account.html'</span>)</span>
-<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/logout'</span>)</span>
-<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> logout():</span>
-<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>    session.pop(<span class="st">'username'</span>, <span class="va">None</span>)</span>
-<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> redirect(url_for(<span class="st">'index'</span>))</span>
-<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/SearchSong'</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
-<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SearchSong():</span>
-<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
-<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a>        url <span class="op">=</span> request.form[<span class="st">'url'</span>]</span>
-<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>        write_variable_to_file2(url)</span>
-<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'SearchSong.html'</span>)</span>
-<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/download'</span>)</span>
-<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> download_file():</span>
-<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a>    musicpackage()</span>
-<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Provide the path to the file you want to serve</span></span>
-<span id="cb4-250"><a href="#cb4-250" aria-hidden="true" tabindex="-1"></a>    file_path <span class="op">=</span> <span class="st">'chord_scraper/test.mid'</span></span>
-<span id="cb4-251"><a href="#cb4-251" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Send the file to the user for download</span></span>
-<span id="cb4-252"><a href="#cb4-252" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> send_file(file_path)</span>
-<span id="cb4-253"><a href="#cb4-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-254"><a href="#cb4-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-255"><a href="#cb4-255" aria-hidden="true" tabindex="-1"></a><span class="at">@app.route</span>(<span class="st">'/SearchWithArtist'</span>, methods<span class="op">=</span>[<span class="st">'GET'</span>, <span class="st">'POST'</span>])</span>
-<span id="cb4-256"><a href="#cb4-256" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SearchWithArtist():</span>
-<span id="cb4-257"><a href="#cb4-257" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> request.method <span class="op">==</span> <span class="st">'POST'</span>:</span>
-<span id="cb4-258"><a href="#cb4-258" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Get the artist name from the form and format it properly</span></span>
-<span id="cb4-259"><a href="#cb4-259" aria-hidden="true" tabindex="-1"></a>        artist <span class="op">=</span> request.form[<span class="st">'artist'</span>].lower().replace(<span class="st">' '</span>, <span class="st">''</span>)</span>
-<span id="cb4-260"><a href="#cb4-260" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Search for the CSV file with the matching artist name</span></span>
-<span id="cb4-261"><a href="#cb4-261" aria-hidden="true" tabindex="-1"></a>        csv_file_path <span class="op">=</span> os.path.join(os.getcwd(), <span class="st">'chord_scraper'</span>, artist <span class="op">+</span> <span class="st">'.csv'</span>)</span>
-<span id="cb4-262"><a href="#cb4-262" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> os.path.exists(csv_file_path):</span>
-<span id="cb4-263"><a href="#cb4-263" aria-hidden="true" tabindex="-1"></a>            write_variable_to_file(csv_file_path)</span>
-<span id="cb4-264"><a href="#cb4-264" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Read the CSV file into a DataFrame</span></span>
-<span id="cb4-265"><a href="#cb4-265" aria-hidden="true" tabindex="-1"></a>            df <span class="op">=</span> pd.read_csv(csv_file_path)</span>
-<span id="cb4-266"><a href="#cb4-266" aria-hidden="true" tabindex="-1"></a>            new_df <span class="op">=</span> df.iloc[:, :<span class="dv">1</span>].copy()</span>
-<span id="cb4-267"><a href="#cb4-267" aria-hidden="true" tabindex="-1"></a>            result_data <span class="op">=</span> []</span>
-<span id="cb4-268"><a href="#cb4-268" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> index, row <span class="kw">in</span> new_df.iterrows():</span>
-<span id="cb4-269"><a href="#cb4-269" aria-hidden="true" tabindex="-1"></a>                result_data.append(row.tolist())</span>
-<span id="cb4-270"><a href="#cb4-270" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-271"><a href="#cb4-271" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Find the first artist whose name starts with the same character as the input artist's name</span></span>
-<span id="cb4-272"><a href="#cb4-272" aria-hidden="true" tabindex="-1"></a>            all_csv_files <span class="op">=</span> [f[:<span class="op">-</span><span class="dv">4</span>] <span class="cf">for</span> f <span class="kw">in</span> os.listdir(os.path.join(os.getcwd(), <span class="st">'chord_scraper'</span>)) <span class="cf">if</span></span>
-<span id="cb4-273"><a href="#cb4-273" aria-hidden="true" tabindex="-1"></a>                             f.endswith(<span class="st">'.csv'</span>)]</span>
-<span id="cb4-274"><a href="#cb4-274" aria-hidden="true" tabindex="-1"></a>            similar_artist <span class="op">=</span> <span class="bu">next</span>((a <span class="cf">for</span> a <span class="kw">in</span> all_csv_files <span class="cf">if</span> a.startswith(artist[<span class="dv">0</span>])), <span class="va">None</span>)</span>
-<span id="cb4-275"><a href="#cb4-275" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> similar_artist:</span>
-<span id="cb4-276"><a href="#cb4-276" aria-hidden="true" tabindex="-1"></a>                suggestion <span class="op">=</span> similar_artist</span>
-<span id="cb4-277"><a href="#cb4-277" aria-hidden="true" tabindex="-1"></a>                error_message <span class="op">=</span> <span class="ss">f"Couldn't find the artist in top 10. Did you mean </span><span class="sc">{</span>suggestion<span class="sc">}</span><span class="ss">?"</span></span>
-<span id="cb4-278"><a href="#cb4-278" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb4-279"><a href="#cb4-279" aria-hidden="true" tabindex="-1"></a>                error_message <span class="op">=</span> <span class="st">"Couldn't find the artist in top 10. No similar artist found."</span></span>
-<span id="cb4-280"><a href="#cb4-280" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> render_template(<span class="st">'SearchWithArtist.html'</span>, error_message<span class="op">=</span>error_message)</span>
-<span id="cb4-281"><a href="#cb4-281" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> render_template(<span class="st">'SearchWithArtist.html'</span>, result_data<span class="op">=</span>result_data)</span>
-<span id="cb4-282"><a href="#cb4-282" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template(<span class="st">'SearchWithArtist.html'</span>)</span>
-<span id="cb4-283"><a href="#cb4-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-284"><a href="#cb4-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-285"><a href="#cb4-285" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">'__main__'</span>:</span>
-<span id="cb4-286"><a href="#cb4-286" aria-hidden="true" tabindex="-1"></a>    app.run(debug<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-30" class="cell" data-tags="[]" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> chordy_functions_package <span class="im">import</span> app</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(inspect.getsource(app))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>from flask import Flask, render_template, request, redirect, url_for, session, send_file
+from flask import jsonify
+from flask_cors import CORS
+import subprocess
+import os
+import difflib
+from dotenv import load_dotenv
+from db import Database, User
+from midiutil import MIDIFile
+from mingus.core import chords
+import ast
+import pandas as pd
+from pychord import Chord
+
+app = Flask(__name__)
+app.secret_key = os.urandom(24)
+
+CORS(app, supports_credentials=True)
+load_dotenv(".env")
+database = Database(os.getenv("DB_PSWD"))
+
+def musicpackage():
+    """
+    Main function for processing music data.
+    Reads chords data from a CSV file, converts chords to notes,
+    and generates a MIDI file based on the chord progression.
+    """
+
+    NOTES = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
+    OCTAVES = list(range(11))
+    NOTES_IN_OCTAVE = len(NOTES)
+
+    errors = {
+        'There was an error.'
+    }
+    def read_csvpath_from_file():
+        """
+        Reads from the config.txt file.
+        Returns the content of line named "cs_path"
+        """
+        with open('config.txt', 'r') as file:
+            for line in file:
+                if line.startswith('csv_path'):
+                    variable_value = line.split('=')[1].strip().strip('"')
+                    return variable_value
+        return None
+
+    def read_index_from_file():
+        """
+         Reads from the config.txt file.
+         Returns the content of line named "user_song"
+         """
+        with open('config.txt', 'r') as file:
+            for line in file:
+                if line.startswith('user_song'):
+                    variable_value = line.split('=')[1].strip().strip('"')
+                    return variable_value
+        return None
+    
+    # take in csv file created by webscraper 
+    csvpath = read_csvpath_from_file()
+    df = pd.read_csv(csvpath)
+    df.head()
+    df = pd.read_csv(csvpath)
+    index = read_index_from_file()
+    # obtain index, song name, and chords 
+    index = int(index)
+    song_name = df.iloc[index, 0]
+    chords_string = df.loc[df['song_name'] == song_name, 'song_chords'].values[0]
+
+    # turn chords into dictionary 
+    chords = ast.literal_eval(chords_string)
+    extracted_strings = []
+    # iterate through dictionary values
+    for key, value in chords.items():
+        extracted_strings.append(value[0])  # Append the first element of the tuple
+    # get barlength
+    first_item = list(chords.keys())[0]
+    bar_length = chords[first_item][1]
+
+    # clean up webscraper code
+    original_list = extracted_strings
+    # Remove semicolons from each string
+    cleaned_list = [s.replace(':', '') for s in original_list]
+
+    def chords_to_notes(chord_list):
+        """
+        Given a list of chord names, returns a list of corresponding notes.
+        """
+        notes_list = []
+        for chord_name in chord_list:
+            if chord_name == 'N':
+                # Handle the special case of a rest
+                notes_list.append('')
+            else:
+                try:
+                    chord = Chord(chord_name)
+                    notes = chord.components()
+                    # filter out numeric indices (only keep strings)
+                    notes = [note for note in notes if isinstance(note, str)]
+                    notes_list.extend(notes)
+                except ValueError:
+                    # for handling invalid chord names
+                    pass
+        return notes_list
+
+    chord_names = cleaned_list
+    resulting_notes = chords_to_notes(chord_names)
+
+    def swap_accidentals(note):
+        """
+        Function to swap accidentals and avoid errors / redundant notes. 
+        In music theory, this refers to two notes with the same name. 
+        """
+        if note == 'Db':
+            return 'C#'
+        if note == 'D#':
+            return 'Eb'
+        if note == 'E#':
+            return 'F'
+        if note == 'Gb':
+            return 'F#'
+        if note == 'G#':
+            return 'Ab'
+        if note == 'A#':
+            return 'Bb'
+        if note == 'B#':
+            return 'C'
+
+        return note
+
+    def note_to_number(note: str, octave: int) -&gt; int:
+        """
+        Takes in note in string format, name value. 
+        Returns numeric value of each note. 
+        """
+        note = swap_accidentals(note)
+        assert note in NOTES, errors['notes']
+        assert octave in OCTAVES, errors['notes']
+
+        note = NOTES.index(note)
+        note += (NOTES_IN_OCTAVE * octave)
+
+        assert 0 &lt;= note &lt;= 127, errors['notes']
+
+        return note
+
+    chord_progression = resulting_notes
+    i = 0
+    # remove all spaces from chord progression
+    chord_progression = [chord for chord in chord_progression if chord.strip() != '']
+    #print("chord progresion", chord_progression) # for debugging 
+    array_of_notes = []
+    for note in chord_progression:
+        array_of_notes.append(note)
+    print("array of notes", array_of_notes)
+    #print(type(chord_progression[0])) # for debugging 
+
+    # create array of all note numbers 
+    array_of_note_numbers = []
+    for note in array_of_notes:
+        OCTAVE = 4
+        array_of_note_numbers.append(note_to_number(note, OCTAVE))
+    
+    # set parameters for music file 
+    track = 0
+    channel = 0
+    time = 0  # In beats
+    duration = 1  # In beats
+    tempo = 120 * int(bar_length)  # In BPM
+    volume = 100  # 0-127, as per the MIDI standard
+
+    MyMIDI = MIDIFile(1)  # One track, defaults to format 1 (tempo track is created
+    # automatically)
+    MyMIDI.addTempo(track, time, tempo)
+
+    for i, pitch in enumerate(array_of_note_numbers):
+        MyMIDI.addNote(track, channel, pitch, time + i, duration, volume)
+
+    with open("chord_scraper/yourmusic.mid", "wb") as output_file:
+        MyMIDI.writeFile(output_file)
+
+def write_variable_to_file(new_value):
+    """
+       Writes a new value to the 'csv_path' variable in the config file.
+    """
+    with open('config.txt', 'r+') as file:
+        lines = file.readlines()
+        file.seek(0)
+        for line in lines:
+            if line.startswith('csv_path'):
+                file.write(f'csv_path = "{new_value}"\n')
+            else:
+                file.write(line)
+        file.truncate()
+
+def write_variable_to_file2(new_value):
+    """
+    Writes a new value to the 'user_song' variable in the config file.
+    """
+    with open('config.txt', 'r+') as file:
+        lines = file.readlines()
+        file.seek(0)
+        for line in lines:
+            if line.startswith('user_song'):
+                file.write(f'user_song = "{new_value}"\n')
+            else:
+                file.write(line)
+        file.truncate()
+
+def read_csvpath_from_file():
+    """
+    Reads the 'csv_path' variable value from the config file.
+    Returns None if the variable is not found.
+    """
+    with open('config.txt', 'r') as file:
+        for line in file:
+            if line.startswith('csv_path'):
+                variable_value = line.split('=')[1].strip().strip('"')
+                return variable_value
+    return None
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    """
+    Renders the index page.
+    If the user is logged in, displays the username.
+    Redirects to the login page if the user is not logged in.
+    """
+    if 'username' in session:
+        return render_template('index.html', username=session['username'])
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """
+    Handles the login functionality.
+    Validates user credentials and sets session username if valid.
+    Renders the login page with an error message if credentials are invalid.
+    """
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if database.verify_user(username, password):
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html', error="Invalid username or password.")
+    return render_template('login.html')
+
+@app.route('/createAccount', methods=['GET', 'POST'])
+def create_account():
+    """
+    Handles the creation of new user accounts.
+    Adds a new user to the database if the username is unique.
+    Renders the create account page with an error message if the username already exists.
+    """
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if database.add_user(User(username, password)):
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            return render_template('create_account.html', error="Username already exists.")
+    return render_template('create_account.html')
+
+@app.route('/logout')
+def logout():
+    """
+    Logs out the current user by removing the username from the session.
+    Redirects to the index page after logout.
+    """
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+@app.route('/SearchSong', methods=['GET', 'POST'])
+def SearchSong():
+    """
+    Handles the search song functionality.
+    Retrieves the URL entered by the user and writes it to the config file.
+    Renders the search song page.
+    """
+    if request.method == 'POST':
+        url = request.form['url']
+        write_variable_to_file2(url)
+    return render_template('SearchSong.html')
+
+@app.route('/download')
+def download_file():
+    """
+    Downloads the generated MIDI file to the user's device.
+    """
+    musicpackage()
+    # Provide the path to the file you want to serve
+    file_path = 'chord_scraper/yourmusic.mid'
+    # Send the file to the user for download
+    return send_file(file_path)
+
+
+@app.route('/SearchWithArtist', methods=['GET', 'POST'])
+def SearchWithArtist():
+    """
+    Handles the search with artist functionality.
+    Retrieves the artist name entered by the user.
+    Searches for a matching CSV file based on the artist's name.
+    If found, displays the matching songs.
+    If not found, suggests similar artists or displays an error message.
+    Renders the search with artist page.
+    """
+    if request.method == 'POST':
+        # Get the artist name from the form and format it properly
+        artist = request.form['artist'].lower().replace(' ', '')
+        # Search for the CSV file with the matching artist name
+        csv_file_path = os.path.join(os.getcwd(), 'chord_scraper', artist + '.csv')
+        if os.path.exists(csv_file_path):
+            write_variable_to_file(csv_file_path)
+            # Read the CSV file into a DataFrame
+            df = pd.read_csv(csv_file_path)
+            new_df = df.iloc[:, :1].copy()
+            result_data = []
+            for index, row in new_df.iterrows():
+                result_data.append(row.tolist())
+        else:
+            # Find the first artist whose name starts with the same character as the input artist's name
+            all_csv_files = [f[:-4] for f in os.listdir(os.path.join(os.getcwd(), 'chord_scraper')) if
+                             f.endswith('.csv')]
+            similar_artist = next((a for a in all_csv_files if a.startswith(artist[0])), None)
+            if similar_artist:
+                suggestion = similar_artist
+                error_message = f"Couldn't find the artist in top 10. Did you mean {suggestion}?"
+            else:
+                error_message = "Couldn't find the artist in top 10. No similar artist found."
+            return render_template('SearchWithArtist.html', error_message=error_message)
+        return render_template('SearchWithArtist.html', result_data=result_data)
+    return render_template('SearchWithArtist.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
 </div>
-</section>
-<section id="demo-time" class="level2">
-<h2 class="anchored" data-anchor-id="demo-time">Demo Time!!</h2>
-<p>Now it is time for some karaoke! Let’s sing along to some of our favorite Taylor Swift hits in a website demo.</p>
-<div class="quarto-figure quarto-figure-center">
+</div>
+<p>Each time when you run <code>flask run</code>, a connection is opened to our unique MongoDB database. The MongoDB atlas connects to regional servers to setup operations. When a user submits a session (that relates to user credentials computation), database computing is called in flask through the db.py helper function and class objects - at run time, we interact with the dynamic database to achieve user login, login sessions, and creating an account.</p>
+<p>On cloud.mongodb.com, this is how our MongoDB deployment and collection looks like in real time:</p>
+<div id="cell-32" class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-03-22T16:22:22.905734Z&quot;,&quot;start_time&quot;:&quot;2024-03-22T16:22:22.872620Z&quot;}" data-jupyter="{&quot;outputs_hidden&quot;:false}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Image(filename<span class="op">=</span><span class="st">'/Users/athena/Desktop/hw6/mongodb.jpg'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-14-1-images.jpg" class="img-fluid figure-img"></p>
-<figcaption>images.jpg</figcaption>
+<p><img src="index_files/figure-html/cell-9-output-1.jpeg" class="img-fluid figure-img"></p>
 </figure>
 </div>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this blog post, you learned how to use the project tools behind Chordy. You learned how to run the website on your local device, along with how each of the main components of our website was created. In the future, you can easily import these functions using the chordy_functions_package from our Github repo. And, you can create your own version of Chordy by changing one of the three components in any way you please.</p>
+<p><strong>Ethical ramifications of the project</strong>: One of the ethical remarks of this project is copyright issues. Artists take a lot of time and pride in creating their songs, and though we are only creating simple chord progressions (which cannot be copyrighted), these chord progressions would not mean anything if the artist did not take the time to create this piece of musical art and take the time to make this song famous. Hence, when utilizing this website, make sure to only use it for personal use and not exploit the song artist’s art.</p>
+<p>Happy singing!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-34-1-664b9f73-52e7-47db-89de-bbaaada26ea1.jpeg" class="img-fluid figure-img"></p>
+<figcaption>dualipa.jpeg</figcaption>
+</figure>
+</div>
+<p><a href="https://www.harpersbazaar.com/celebrity/latest/a35833418/dua-lipa-2021-grammy-awards-performance/">Image source</a></p>
 
 
 </section>
